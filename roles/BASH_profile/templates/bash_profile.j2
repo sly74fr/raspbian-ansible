@@ -1,0 +1,60 @@
+# .bash_profile
+
+# User specific environment and startup programs
+
+# Personnal prompt setup
+PS1="[\e[7m\][\u@\h: \w - \t]\[\e[m\]\$ "
+
+# Personnal history setup
+export HISTCONTROL=erasedups
+export HISTSIZE=10000
+shopt -s histappend
+
+# Personnal aliases
+alias ll='ls -lh'
+alias lll='ls -laih'
+alias rm='rm -i'
+alias cd..='cd ..'
+alias cd-='cd -'
+alias quit='kill -15'
+alias hg='history|grep'
+#alias make='make -j'
+
+# Personnal Functions
+# Edit history file
+histedit () { history -a ; vi ~/.bash_history ; history -r ; }
+
+mkcd () { mkdir "$1" && cd "$1"; }
+
+# Swap two file's content
+swap()
+{
+    if [ $# -lt 2 ]; then
+        echo "usage: swap file1 file2"
+        return 1
+    fi
+
+    if [ ! -f "${1}" ]; then
+        echo "swap: '${1}' file does not exist, exiting..."
+        return 1
+    fi
+
+    if [ ! -f "${2}" ]; then
+        echo "swap: '${2}' file does not exist, exiting..."
+        return 1
+    fi
+
+    TMPFILE=`mktemp -q /${TMPDIR}/swap.XXXXXX`
+    if [ $? -ne 0 ]; then
+        echo "swap: Can't create '${TMPFILE}' temp file, exiting..."
+        return 1
+    fi
+
+    mv -f ${1} ${TMPFILE} && mv ${2} ${1} && mv ${TMPFILE} ${2};
+    if [ $? -ne 0 ]; then
+        echo "swap: Can't swap files '${1}' and '${2}', exiting..."
+        return 1
+    fi
+
+    return 0
+}

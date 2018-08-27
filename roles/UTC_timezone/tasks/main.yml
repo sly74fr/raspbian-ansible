@@ -1,0 +1,5 @@
+---
+
+- name: Setting timezone to Etc/UTC
+  timezone: name="Etc/UTC"
+  become: yes

@@ -1,0 +1,10 @@
+---
+
+- hosts: all
+
+  gather_facts: true
+
+  roles:
+    - DATE_syncing
+    - DHCP_server
+#    - OS_reboot

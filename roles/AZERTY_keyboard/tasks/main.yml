@@ -1,0 +1,5 @@
+---
+
+- name: Setting keyboard to FR
+  lineinfile: dest="/etc/default/keyboard" regexp=^XKBLAYOUT line="XKBLAYOUT=\"fr\"" backup=yes
+  become: yes

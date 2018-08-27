@@ -1,0 +1,13 @@
+---
+
+- name: Installing UFW
+  apt: name="ufw"
+  become: true
+
+- name: Opening UFW port for SSH (TCP 22)
+  ufw: rule="allow" proto="tcp" port="22"
+  become: true
+
+- name: Setting UFW default policy to deny and start firewall
+  ufw: policy="deny" state="enabled"
+  become: true

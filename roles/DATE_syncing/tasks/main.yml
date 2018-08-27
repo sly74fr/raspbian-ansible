@@ -1,0 +1,9 @@
+---
+
+- name: Getting local date value
+  local_action: shell date
+  register: local_date
+
+- name: Updating remote date whith local date value
+  shell: date -s "{{ local_date.stdout }}"
+  become: yes

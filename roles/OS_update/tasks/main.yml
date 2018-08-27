@@ -1,0 +1,23 @@
+---
+
+- name: Updating firmware
+  shell: rpi-update
+  become: yes
+
+- name: Cleaning apt-get
+  command: apt-get clean -y warn=False
+  become: yes
+
+- name: Updating apt-get
+  apt: update_cache=yes
+  async: 3600
+  become: yes
+
+- name: Safely upgrading the machine
+  apt: upgrade=safe
+  async: 3600
+  become: yes
+
+- name: Autoremoving apt-get
+  apt: autoremove=yes
+  become: yes

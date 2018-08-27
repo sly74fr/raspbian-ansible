@@ -1,0 +1,4 @@
+---
+
+- name: Copying the BASH profile
+  template: src=bash_profile.j2 dest=~/.bash_profile backup=yes

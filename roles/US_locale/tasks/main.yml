@@ -1,0 +1,23 @@
+---
+
+- set_fact: locale="en_US.UTF-8"
+
+- name: Adding en_US.UTF-8 to locales
+  locale_gen: name="{{ locale }}" state=present
+  become: yes
+
+- name: Applying new locales
+  command: locale-gen
+  become: yes
+
+- name: Setting en_US.UTF-8 as default locale
+  lineinfile:
+    path: /etc/default/locale
+    regexp: '^LANG='
+    line: 'LANG={{ locale }}'
+    backup: yes
+  become: yes
+
+- name: Loading en_US.UTF-8 as default locale
+  shell: /usr/sbin/update-locale
+  become: yes

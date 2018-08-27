@@ -1,0 +1,5 @@
+---
+
+- name: Disabling swap permanently
+  shell: systemctl disable dphys-swapfile
+  become: yes

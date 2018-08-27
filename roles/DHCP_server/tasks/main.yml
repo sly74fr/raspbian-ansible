@@ -1,0 +1,29 @@
+---
+
+- name: Copying the DHCPCD configuration for static address
+  template: src=dhcpcd.j2 dest=/etc/dhcpcd.conf backup=yes
+  become: yes
+
+- name: Installing DNSMASQ
+  apt: name=dnsmasq
+  become: yes
+
+- name: Stopping DNSMASQ
+  service: name=dnsmasq state=stopped
+  become: yes
+
+- name: Copying the DNSMASQ ethers file for static addresses
+  template: src=ethers.j2 dest=/etc/ethers backup=yes
+  become: yes
+
+- name: Copying the DNSMASQ configuration for static addresses
+  template: src=dnsmasq.j2 dest=/etc/dnsmasq.conf backup=yes
+  become: yes
+
+- name: Opening UFW port for DHCP (UDP 67)
+  ufw: rule="allow" proto="udp" port="67"
+  become: true
+
+- name: Starting DNSMASQ
+  service: name=dnsmasq state=started
+  become: yes
