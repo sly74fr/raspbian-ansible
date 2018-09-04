@@ -1,12 +1,12 @@
 raspian-ansible
-====
+===============
 
 Collection of Ansible roles to set a Raspberry Pi up.
 
 License
 =======
 
-BSD 3-Clause : see [LICENSE.txt](../master/LICENSE.txt)
+GNU GPL3 : see [LICENSE](../master/LICENSE)
 
 Goodies are also greatly appreciated if you feel like rewarding the job :)
 
