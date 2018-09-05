@@ -35,18 +35,19 @@ passwd
 ```console
 pip install --upgrade pip
 pip install ansible==2.6.2
-cd raspian-ansible/
+git clone https://github.com/sly74fr/raspbian-ansible.git
+cd raspbian-ansible/
 ansible-playbook -i YOUR_INVENTORY setup.yml -kK -f 10 # At least once !
 ```
 
 ## Updating Raspberry Pi DHCP settings from a Mac with Ansible
 ```console
-cd raspian-ansible/
+cd raspbian-ansible/
 ansible-playbook -i YOUR_INVENTORY dhcp.yml -kK -f 10  # Each time DHCP settings are should be updated
 ```
 
 ## Updating Raspberry Pi date and time from a Mac with Ansible
 ```console
-cd raspian-ansible/
+cd raspbian-ansible/
 ansible-playbook -i YOUR_INVENTORY date.yml -kK -f 10  # Each time date should be updated
 ```
