@@ -15,5 +15,4 @@
     - US_locale
     - AZERTY_keyboard
     - DISABLE_swap
-    - DHCP_server
     - { role: OS_reboot, waiting: no }
