@@ -1,0 +1,69 @@
+---
+
+# Usage ([confopts] is optionnal):
+# - name: Deploy ...
+#   include: deploy.yml
+#   vars:
+#     source:   "http://.../truc.tar.gz"
+#     dirname:  "truc-0.0.1"
+#     libname:  "libtruc"
+#     confopts:  "--with-blah=/usr/local/blah --with-foo=/usr/local/foo-314"
+
+- debug: msg="Deploying {{ url }} software"
+
+- name: Get a new temporary directory name
+  command: mktemp -d
+  register: mktemp
+
+- set_fact: mktemp_dir={{ mktemp.stdout }}
+- debug: var=mktemp_dir
+
+- name: Create temporary directory
+  file: path={{ mktemp_dir }} state=directory mode=0755
+
+- name: Download sources
+  get_url: url="{{ url }}" dest="{{ mktemp_dir }}/source"
+  async: 3600
+
+- name: Unarchive sources
+  unarchive: src="{{ mktemp_dir }}/source" dest="{{ mktemp_dir }}/" copy=no
+
+- set_fact: build_dir="{{ mktemp_dir }}/{{ dirname }}/"
+
+#- set_fact: build_dir="{{ mktemp_dir }}/{{ dirname }}/build/"
+#- debug: var=build_dir
+#- name: Create build directory
+#  file: path="{{ build_dir }}" state=directory mode=0755
+
+#- set_fact: install_prefix="--prefix=/usr/local/{{ dirname }}"
+#  when: dirname is defined
+
+- name: Configure software
+#  command: "../configure {{ install_prefix|default('') }} {{ confopts|default('') }}"
+  command: "./configure {{ install_prefix|default('') }} {{ confopts|default('') }}"
+  args:
+    chdir: "{{ build_dir }}"
+
+- name: Build software
+  command: "make"
+  args:
+    chdir: "{{ build_dir }}"
+
+- name: Install software
+  command: "make install"
+  args:
+    chdir: "{{ build_dir }}"
+  become: yes
+
+##- name: Remove previous software ldconfig file
+##  file: path=/etc/ld.so.conf.d/{{ dirname }}.conf state=absent
+##  when: dirname is defined
+#
+#- name: Create and register software ldconfig file
+#  lineinfile: dest=/etc/ld.so.conf.d/{{ dirname }}.conf create=yes mode=0644 line='/usr/local/{{ dirname }}/lib' validate="echo %s && ldconfig && ldconfig -p|grep {{ libname }}"
+#  when: dirname is defined
+#  sudo: yes
+#
+#- name: Update ldconfig cache
+#  command: "/sbin/ldconfig"
+#  sudo: yes
