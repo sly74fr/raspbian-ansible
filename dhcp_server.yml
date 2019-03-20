@@ -1,0 +1,19 @@
+---
+
+- hosts: all
+
+  gather_facts: true
+
+  roles:
+    - DATE_syncing
+    - OS_update
+    - OS_reboot
+    - DATE_syncing
+    - SSH_firewall
+    - BASH_profile
+    - UTC_timezone
+    - US_locale
+    - AZERTY_keyboard
+    - DISABLE_swap
+    - DHCP_server
+    - { role: OS_reboot, waiting: no }
