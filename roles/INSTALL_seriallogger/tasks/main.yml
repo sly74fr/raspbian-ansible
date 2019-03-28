@@ -1,0 +1,12 @@
+---
+
+- set_fact: destination=~/Serial_Logger
+- name: Creates directory
+  file: path={{ destination }} state=directory
+
+- name: Transfer script file
+  copy: mode="u+rwx" src=../files/restart_all.sh dest={{ destination }}/
+
+- name: Installing screen
+  apt: name=screen
+  become: yes
