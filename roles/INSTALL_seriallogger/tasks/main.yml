@@ -5,7 +5,10 @@
   file: path={{ destination }} state=directory
 
 - name: Transfer script file
-  copy: mode="u+rwx" src=../files/restart_all.sh dest={{ destination }}/
+  copy: mode="u+rwx" src=../files/{{ item }} dest={{ destination }}/
+  with_items:
+     - restart_all.sh
+     - query_all.sh
 
 - name: Installing screen
   apt: name=screen
