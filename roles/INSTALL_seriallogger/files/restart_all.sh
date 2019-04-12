@@ -1,5 +1,17 @@
 #/bin/sh
 
+# Test lock file existance first
+locker="LOCK"
+if [ -f $locker ]
+then
+    echo "WARNING: a test is already ongoing !!!"
+    echo "========="
+    cat $locker
+    echo "========="
+    echo "Please RESPONSIVLY remove the '$locker' file by hand first, then relaunch $0."
+    exit -1
+fi
+
 killall -q tio
 
 now=`date "+%Y.%m.%d.%H.%M.%S"`
@@ -12,3 +24,7 @@ do
     echo "Logging $device in $file."
 	screen -d -m tio -t -l $file -b 19200 $device
 done
+
+touch $locker
+
+exit 0
