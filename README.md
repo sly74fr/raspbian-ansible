@@ -1,7 +1,7 @@
 raspbian-ansible
 ================
 
-Collection of Ansible roles to set a Raspberry Pi up.
+Collection of Ansible roles to set up a Raspberry Pi.
 
 License
 =======
@@ -31,23 +31,11 @@ ssh pi@XXX.XXX.XXX.XXX
 passwd
 ```
 
-## Setting up Raspberry Pi OS from a Mac with Ansible
+## Applying test.yml on a Raspberry Pi from a Mac with Ansible
 ```console
 pip install --upgrade pip
 pip install ansible==2.6.2
 git clone https://github.com/sly74fr/raspbian-ansible.git
 cd raspbian-ansible/
 ansible-playbook -i YOUR_INVENTORY setup.yml -kK -f 10 # At least once !
-```
-
-## Updating Raspberry Pi DHCP settings from a Mac with Ansible
-```console
-cd raspbian-ansible/
-ansible-playbook -i YOUR_INVENTORY dhcp.yml -kK -f 10  # Each time DHCP settings are should be updated
-```
-
-## Updating Raspberry Pi date and time from a Mac with Ansible
-```console
-cd raspbian-ansible/
-ansible-playbook -i YOUR_INVENTORY date.yml -kK -f 10  # Each time date should be updated
 ```
