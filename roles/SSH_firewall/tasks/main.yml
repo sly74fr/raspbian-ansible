@@ -1,13 +1,22 @@
 ---
 
-- name: Installing UFW
+- name: Install UFW firewall
   apt: name="ufw"
   become: true
 
-- name: Opening UFW port for SSH (TCP 22)
+- name: Open firewall port for SSH (TCP 22)
   ufw: rule="allow" proto="tcp" port="22"
   become: true
 
-- name: Setting UFW default policy to deny and start firewall
-  ufw: policy="deny" state="enabled"
+#- debug: var=ports
+- name: Open given ports {{ ports }} through firewall
+  ufw: proto=tcp port={{ item }} rule=allow
+  with_items: "{{ ports }}"
+  when:
+    - ports is defined
+    - ports|length > 0
+  become: true
+
+- name: Set firewall default policy to deny incoming
+  ufw: state=enabled direction=incoming policy=deny
   become: true
