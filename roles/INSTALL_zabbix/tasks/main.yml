@@ -1,0 +1,91 @@
+---
+
+- set_fact: db_name=zabbix
+
+### Auto-signed certificate make this fails...
+### - name: Download Zabbix 4.0 .deb from the Internet
+###   become: yes
+###   apt:
+###     deb: https://repo.zabbix.com/zabbix/4.0/debian/pool/main/z/zabbix-release/zabbix-release_4.0-2+stretch_all.deb
+###     validate_certs: False
+- name: Get a new temporary directory name
+  command: mktemp -d
+  register: mktemp
+- set_fact: mktemp_dir={{ mktemp.stdout }}
+- name: Create temporary directory
+  file: path={{ mktemp_dir }} state=directory mode=0755
+- set_fact: zabbix_deb="{{ mktemp_dir }}/zabbix.deb"
+- name: Download Zabbix 4.0 .deb from the Internet
+  shell: wget --no-check-certificate https://repo.zabbix.com/zabbix/4.0/debian/pool/main/z/zabbix-release/zabbix-release_4.0-2+stretch_all.deb -O "{{ zabbix_deb }}"
+- name: Import downloaded Zabbix 4.0 .deb
+  become: yes
+  apt:
+    deb: "{{ zabbix_deb }}"
+
+- name: Install Zabbix 4.0 packages
+  become: yes
+  apt:
+    name: [zabbix-server-mysql, zabbix-frontend-php, zabbix-agent, python-mysqldb]
+    update_cache: yes
+    state: present
+
+- name: Remove all MySQL anonymous user accounts
+  mysql_user:
+    name: ''
+    host_all: yes
+    state: absent
+
+- name: Remove MySQL 'test' database
+  mysql_db:
+    name: test
+    state: absent
+
+- name: Create the zabbix database
+  mysql_db:
+    name: zabbix
+    state: present
+    encoding: utf8
+
+- name: Create zabbix user with full access to the zabbix database
+  mysql_user:
+    name: "{{ db_name }}"
+    host: localhost
+    state: present
+    password: "{{ vault_zabbix_db_pswd }}"
+    priv: "{{ db_name }}.*:ALL,GRANT"
+    
+- name: Import pristine database
+  mysql_db:
+    name: "{{ db_name }}"
+    state: import
+    target: /usr/share/doc/zabbix-server-mysql/create.sql.gz
+  ignore_errors: True # Idempotence !
+
+- name: Set database password in /etc/zabbix/zabbix_server.conf
+  become: yes
+  lineinfile:
+    backup: yes
+    path: /etc/zabbix/zabbix_server.conf
+    regexp: '^DBPassword='
+    insertafter: '^# DBPassword='
+    line: DBPassword={{ vault_zabbix_db_pswd }}
+
+- name: Set timezone in /etc/zabbix/apache.conf
+  become: yes
+  lineinfile:
+    backup: yes
+    path: /etc/zabbix/apache.conf
+    regexp: '^\s*php_value date.timezone '
+    insertafter: '^\s*# php_value date.timezone '
+    line: php_value date.timezone Europe/Paris
+
+- name: Restart services and enable them on boot
+  become: yes
+  service:
+    name: "{{ item }}"
+    state: restarted
+    enabled: true
+  with_items:
+     - zabbix-server
+     - zabbix-agent
+     - apache2
