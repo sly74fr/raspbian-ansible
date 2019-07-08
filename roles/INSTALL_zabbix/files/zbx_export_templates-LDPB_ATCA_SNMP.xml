@@ -555,6 +555,65 @@
                     <master_item/>
                 </item>
                 <item>
+                    <name>Slot05_LArC_temp_fpga</name>
+                    <type>1</type>
+                    <snmp_community>public</snmp_community>
+                    <snmp_oid>.1.3.6.1.4.1.16394.2.1.1.3.1.28.138.71</snmp_oid>
+                    <key>Slot05_LArC_temp_fpga</key>
+                    <delay>30s</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>0</status>
+                    <value_type>3</value_type>
+                    <allowed_hosts/>
+                    <units/>
+                    <snmpv3_contextname/>
+                    <snmpv3_securityname/>
+                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
+                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
+                    <snmpv3_authpassphrase/>
+                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
+                    <snmpv3_privpassphrase/>
+                    <params/>
+                    <ipmi_sensor/>
+                    <authtype>0</authtype>
+                    <username/>
+                    <password/>
+                    <publickey/>
+                    <privatekey/>
+                    <port/>
+                    <description/>
+                    <inventory_link>0</inventory_link>
+                    <applications>
+                        <application>
+                            <name>LDPB_ATCA_SNMP_Monitoring</name>
+                        </application>
+                    </applications>
+                    <valuemap/>
+                    <logtimefmt/>
+                    <preprocessing/>
+                    <jmx_endpoint/>
+                    <timeout>3s</timeout>
+                    <url/>
+                    <query_fields/>
+                    <posts/>
+                    <status_codes>200</status_codes>
+                    <follow_redirects>1</follow_redirects>
+                    <post_type>0</post_type>
+                    <http_proxy/>
+                    <headers/>
+                    <retrieve_mode>0</retrieve_mode>
+                    <request_method>0</request_method>
+                    <output_format>0</output_format>
+                    <allow_traps>0</allow_traps>
+                    <ssl_cert_file/>
+                    <ssl_key_file/>
+                    <ssl_key_password/>
+                    <verify_peer>0</verify_peer>
+                    <verify_host>0</verify_host>
+                    <master_item/>
+                </item>
+                <item>
                     <name>Slot11_AMC5_temp_fpga</name>
                     <type>1</type>
                     <snmp_community>public</snmp_community>
@@ -737,6 +796,65 @@
                     <snmp_community>public</snmp_community>
                     <snmp_oid>.1.3.6.1.4.1.16394.2.1.1.3.1.28.144.50</snmp_oid>
                     <key>Slot11_AMC8_temp_fpga</key>
+                    <delay>30s</delay>
+                    <history>90d</history>
+                    <trends>365d</trends>
+                    <status>0</status>
+                    <value_type>3</value_type>
+                    <allowed_hosts/>
+                    <units/>
+                    <snmpv3_contextname/>
+                    <snmpv3_securityname/>
+                    <snmpv3_securitylevel>0</snmpv3_securitylevel>
+                    <snmpv3_authprotocol>0</snmpv3_authprotocol>
+                    <snmpv3_authpassphrase/>
+                    <snmpv3_privprotocol>0</snmpv3_privprotocol>
+                    <snmpv3_privpassphrase/>
+                    <params/>
+                    <ipmi_sensor/>
+                    <authtype>0</authtype>
+                    <username/>
+                    <password/>
+                    <publickey/>
+                    <privatekey/>
+                    <port/>
+                    <description/>
+                    <inventory_link>0</inventory_link>
+                    <applications>
+                        <application>
+                            <name>LDPB_ATCA_SNMP_Monitoring</name>
+                        </application>
+                    </applications>
+                    <valuemap/>
+                    <logtimefmt/>
+                    <preprocessing/>
+                    <jmx_endpoint/>
+                    <timeout>3s</timeout>
+                    <url/>
+                    <query_fields/>
+                    <posts/>
+                    <status_codes>200</status_codes>
+                    <follow_redirects>1</follow_redirects>
+                    <post_type>0</post_type>
+                    <http_proxy/>
+                    <headers/>
+                    <retrieve_mode>0</retrieve_mode>
+                    <request_method>0</request_method>
+                    <output_format>0</output_format>
+                    <allow_traps>0</allow_traps>
+                    <ssl_cert_file/>
+                    <ssl_key_file/>
+                    <ssl_key_password/>
+                    <verify_peer>0</verify_peer>
+                    <verify_host>0</verify_host>
+                    <master_item/>
+                </item>
+                <item>
+                    <name>Slot11_LArC_temp_fpga</name>
+                    <type>1</type>
+                    <snmp_community>public</snmp_community>
+                    <snmp_oid>.1.3.6.1.4.1.16394.2.1.1.3.1.28.144.71</snmp_oid>
+                    <key>Slot11_LArC_temp_fpga</key>
                     <delay>30s</delay>
                     <history>90d</history>
                     <trends>365d</trends>
