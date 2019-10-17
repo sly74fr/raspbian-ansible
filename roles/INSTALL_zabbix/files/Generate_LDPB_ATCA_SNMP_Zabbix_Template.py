@@ -156,6 +156,7 @@ def LdpbSlotsItems():
     for s in SLOTS:
         slotPrefix = "Slot" + s + "_"
         ZabbixTemplateItem(slotPrefix + 'LArC_FPGA_Temp', '.1.3.6.1.4.1.16394.2.1.1.3.1.28.' + SLOTS[s] + '.71', unit = CELSIUS)
+        ZabbixTemplateItem(slotPrefix + 'LArC_Hotswap_State', '.1.3.6.1.4.1.16394.2.1.1.2.1.11.' + SLOTS[s] + '.0')
         for a in AMCS:
             amcPrefix = slotPrefix + "AMC" + a + "_"
             oidSuffix = '.' + SLOTS[s] + '.' + AMCS[a]
