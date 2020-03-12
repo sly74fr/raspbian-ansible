@@ -21,3 +21,4 @@
 #    - { role: OS_reboot, waiting: no }
 #    - INSTALL_seriallogger
 #    - INSTALL_zabbix
+#    - { role: OS_hostname, hostname: "EPC-LAR-DRO-01" }

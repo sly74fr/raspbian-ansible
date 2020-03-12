@@ -1,0 +1,20 @@
+---
+
+# - debug: msg="Updating hostname to '{{ hostname }}'."
+
+- name: Updating /etc/hosts
+  lineinfile: dest="/etc/hosts" regexp=^127.0.1.1 line="127.0.1.1 {{ hostname }}" backup=yes
+  become: yes
+
+- name: Setting volatile hostname
+  hostname:
+      name: '{{ hostname }}'
+  become: yes
+
+- name: Setting permanent hostname
+  template:
+      src: hostname.j2
+      dest: /etc/hostname
+      force: yes
+      backup: yes
+  become: yes
