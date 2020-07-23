@@ -3,9 +3,6 @@
 - hosts: zabbix-server
   become: yes
   roles:
-    - OS_update
     - { role: SSH_firewall, ports: [80,]}
-    - BASH_profile
-    - US_locale
     - INSTALL_zabbix
-    - OS_reboot
+    - { role: OS_reboot, waiting: no }
