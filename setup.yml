@@ -1,0 +1,21 @@
+---
+
+- hosts: all
+
+  gather_facts: true
+
+  roles:
+    - DATE_syncing
+    - OS_update
+    - OS_reboot
+    - DATE_syncing
+    - SSH_firewall
+    - BASH_profile
+    - UTC_timezone
+    - US_locale
+    - AZERTY_keyboard
+    - DISABLE_swap
+    - { role: NTP_client, ntp_config_server: [1.ubuntu.pool.ntp.org] }
+    - INSTALL_commons
+    - { role: OS_hostname, hostname: "raspbian-test" }
+    - { role: OS_reboot, waiting: no }
