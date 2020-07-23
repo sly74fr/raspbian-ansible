@@ -1,0 +1,13 @@
+---
+
+- name: Install required packages for Atmel Atmega128 AVR Toolchain
+  become: yes
+  apt:
+    name:
+      - avr-libc
+      - binutils-avr
+      - gcc-avr
+      - avrdude
+      - gdb-avr
+    update_cache: yes
+    state: present

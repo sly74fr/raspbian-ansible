@@ -23,4 +23,5 @@
 #    - INSTALL_commons
 #    - INSTALL_seriallogger
 #    - INSTALL_zabbix
+#    - INSTALL_AtmelAvrToolchain
 #    - { role: OS_hostname, hostname: "EPC-LAR-DRO-01" }
