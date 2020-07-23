@@ -1,0 +1,8 @@
+---
+
+- name: Install common tools
+  become: yes
+  apt:
+    name: [htop, tree, unzip, firefox-esr, nautilus, gedit, meld, tio]
+    update_cache: yes
+    state: present
