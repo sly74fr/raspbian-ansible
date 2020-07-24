@@ -3,6 +3,6 @@
 - name: Install common tools
   become: yes
   apt:
-    name: [htop, tree, unzip, firefox-esr, nautilus, gedit, meld, tio]
+    name: [htop, tree, unzip, firefox-esr, nautilus, gedit, meld, tio, git]
     update_cache: yes
     state: present
