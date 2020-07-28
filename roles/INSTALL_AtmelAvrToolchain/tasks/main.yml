@@ -11,3 +11,21 @@
       - gdb-avr
     update_cache: yes
     state: present
+
+- name: Grant access to physical serial ports
+  become: yes
+  command: usermod -a -G dialout {{ ansible_ssh_user }}
+
+- name: Install UDEV rules with backup if any
+  become: yes
+  copy:
+    src: ../files/51_avrisp.rules
+    dest: /lib/udev/rules.d/ #/etc/udev/rules.d/
+    owner: root
+    group: root
+    mode: '0644'
+    backup: yes
+
+- name: Reload than trigger UDEV rules
+  become: yes
+  shell: udevadm control --reload-rules && udevadm trigger
