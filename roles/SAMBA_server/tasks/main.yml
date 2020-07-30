@@ -1,0 +1,56 @@
+---
+
+### - name: Create {{ exported_path }} exported directory
+###   become: yes
+###   file:
+###     path: '{{ exported_path }}'
+###     state: directory
+###     recurse: yes
+###     mode: '1777'
+###     owner: root
+###     group: root
+
+- name: Install Samba packages
+  become: yes
+  apt:
+    name: [samba, samba-common-bin]
+    update_cache: yes
+    state: present
+
+- name: Stop Samba
+  become: yes
+  service: name=smbd state=stopped
+
+- name: Set Samba workgroup
+  become: yes
+  lineinfile:
+    path: /etc/samba/smb.conf
+    regexp: '^workgroup ='
+    line: 'workgroup = RASPBIAN'
+    backup: yes
+
+### - name: Define Samba {{ exported_path }} share
+###   become: yes
+###   blockinfile:
+###     path: /etc/samba/smb.conf
+###     block: |
+###       [PiShare]
+###       comment=Raspberry Pi Share
+###       path={{ exported_path }}
+###       browseable=Yes
+###       writeable=Yes
+###       only guest=no
+###       create mask=0777
+###       directory mask=0777
+###       public=no
+###     backup: yes
+
+- name: Open Samba ports through firewall
+  become: yes
+  ufw:
+    rule: allow
+    name: samba
+
+- name: Start and enable Samba
+  become: yes
+  service: name=smbd state=started enabled=yes
