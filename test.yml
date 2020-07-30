@@ -17,7 +17,7 @@
 #    - US_locale
 #    - AZERTY_keyboard
 #    - DISABLE_swap
-#    - { role: NTP_client, ntp_config_server: [1.ubuntu.pool.ntp.org] }
+    - { role: NTP_client, ntp_config_server: '{{ ntp_servers }}' }
 #    - { role: DEPLOY_sources, url: "https://github.com/tio/tio/releases/download/v1.32/tio-1.32.tar.xz", dirname: "tio-1.32" }
 #    - { role: OS_reboot, waiting: no }
 #    - INSTALL_commons
