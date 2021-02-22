@@ -1,37 +1,35 @@
 ---
-- name: Add the OS specific variables
-  include_vars: "{{ ansible_os_family }}.yml"
-  tags: ["configuration","packages","service","ntp"]
 
-- name: Install the required packages in Redhat derivatives
-  yum: name={{ item }} state={{ npt_pkg_state }}
-  with_items: "{{ ntp_pkgs }}"
-  when: ansible_os_family == 'RedHat'
-  tags: ["packages","ntp"]
+- name: Update '/etc/systemd/timesyncd.conf' with given NTP server(s) if any
   become: yes
+  replace:
+    backup: yes
+    path: /etc/systemd/timesyncd.conf
+    regexp: '^NTP=(.+)$'
+    replace: NTP={{ ntp_config_server }}
 
-- name: Install the required packages in Debian derivatives
-  apt: name={{ item }} state={{ npt_pkg_state }} update_cache=yes
-  with_items: "{{ ntp_pkgs }}"
-  when: ansible_os_family == 'Debian'
-  tags: ["packages","ntp"]
+- name: Add given NTP server(s) to '/etc/systemd/timesyncd.conf'
   become: yes
+  replace:
+    backup: yes
+    path: /etc/systemd/timesyncd.conf
+    regexp: '#NTP='
+    replace: NTP={{ ntp_config_server }}
 
-# ntpdate is not nedeed. by default in debian system, ntpd is launch with -g option (that do exactly ntpdate).
-- name: Remove ntpdate in Debian derivatives
-  apt: name=ntpdate state=absent
-  when: ansible_os_family == 'Debian'
-  tags: ["packages","ntp"]
+- name: Enable NTP servers fallback in '/etc/systemd/timesyncd.conf'
   become: yes
+  replace:
+    backup: yes
+    path: /etc/systemd/timesyncd.conf
+    regexp: '#FallbackNTP='
+    replace: 'FallbackNTP='
 
-- name: Copy the ntp.conf template file
-  template: src=ntp.conf.j2 dest=/etc/ntp.conf
-  notify: 
-  - restart ntp
-  tags: ["configuration","packages","ntp"]
+- name: Enable NTP (systemd timesyncd) service
   become: yes
+  command: timedatectl set-ntp true
 
-- name: Start/stop ntp service
-  service: name={{ ntp_service_name }} state={{ ntp_service_state }} enabled={{ ntp_service_enabled }} pattern="/ntpd"
-  tags: ["service","ntp"]
-  become: yes
+- name: Show NTP (systemd timesyncd) status
+  command: "timedatectl status"
+  register: output
+- debug: msg="{{ output.stdout }}"
+#- debug: msg="{{ output.stderr }}"
