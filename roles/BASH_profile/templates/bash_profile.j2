@@ -21,10 +21,18 @@ alias hg='history|grep'
 #alias make='make -j'
 
 # Personnal Functions
-# Edit history file
-histedit () { history -a ; vi ~/.bash_history ; history -r ; }
 
 mkcd () { mkdir "$1" && cd "$1"; }
+
+histedit () { history -a ; vi ~/.bash_history ; history -r ; }
+hg()
+{
+    if [ $# -lt 1 ]; then
+        history
+    else
+    	history | grep $1
+    fi
+}
 
 # Swap two file's content
 swap()
@@ -57,4 +65,11 @@ swap()
     fi
 
     return 0
+}
+
+search()
+{
+    eval TOKEN=\${$#}
+    eval PATHES=\${*%${!#}}
+    grep -rin $TOKEN $PATHES
 }
