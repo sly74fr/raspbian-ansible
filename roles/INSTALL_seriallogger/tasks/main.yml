@@ -1,16 +1,20 @@
 ---
 
+- name: Installing dependencies
+  apt: name={{ item }}
+  with_items:
+     - screen
+     - tio
+  become: yes
+
 - set_fact: destination=~/Serial_Logger
-- name: Creates directory
+- name: Creating directory
   file: path={{ destination }} state=directory
 
-- name: Transfer script file
+- name: Transfering files
   copy: mode="u+rwx" src=../files/{{ item }} dest={{ destination }}/
   with_items:
-     - restart_all.sh
-     - query_all.sh
+     - conf.sh
+     - start_all.sh
+     - stop_all.sh
      - README.txt
-
-- name: Installing screen
-  apt: name=screen
-  become: yes

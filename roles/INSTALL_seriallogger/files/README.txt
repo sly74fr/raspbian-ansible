@@ -1,19 +1,18 @@
 Welcome to the Serial Logger README file !
 
 INTRO:
-The purpose of this tool is to log to file any data incomming on serial ports.
+The purpose of this tool is to log to file any data incoming on serial ports.
 
 USAGE:
-To (re)start logginig, use the `restart_all.sh` script. It will:
- * check there is no LOCK file existing, to prevent ruinin an already ongoing test;
- * kill all running `tio` instances;
- * start (and detach using `screen`) one `tio` (19200 baud) process per FTDI id present in the script itself;
+To start logging, use the `start_all.sh` script. It will:
+ * read the configuration file you specify as first argument to define which `tio` executable to use, the destination path for the logs, and the names, devices and baud rates to use (please see conf.sh for a full example);
+ * assert that there is no LOCK file existing, to prevent ruining an already ongoing test;
+ * create a new horodated directory in the destination path (symbolically aliased to CURRENT for your convenience);
+ * start (and detach using `screen`) one `tio` process per serial device defined in the given configuration file;
  * create a LOCK file.
 
-To query all ongoing connection, the `query_all.sh` script echoes an 'i\r' character sequence to each per FTDI id present in the script itself.
-
-TODO:
- * Move "FTDI IDs / File Name / Connection Speed" from inside the scripts to a dedicated configuration file;
- * Investigate ICARE logging '?' garbage;
- * Update/fix `tio` to remove `screen` dependency.
-
+To stop logging, use the `stop_all.sh` script. It will:
+ * read the configuration file you specify as first argument to define`screen` session to end;
+ * check there is a LOCK file existing, to assert an ongoing test;
+ * stop all corresponding `screen` dettached sessions, thus killing all attached `tio` processes;
+ * remove the LOCK file.
