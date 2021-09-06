@@ -71,19 +71,20 @@ do
     d=`eval echo \${dev[$i]}`
     b=`eval echo \${baud[$i]}`
 
+#    if [ ! -f $device ]
     if [ ! -c $d ]
     then
-        echo "ERROR> device '$d' not found !"
-        exit 5
+        echo "WARNING> skipping device '$d' not found !"
+        ##exit 5
+    else
+        file=$full/$n.log
+        screen -d -S $n -m tio -b $b -t -l $file $d
+        if [ $? -ne 0 ]
+        then
+            exit 6
+        fi
+        echo "Logging '$n' ($d) at $b bauds in '$file'."
     fi
-
-    file=$full/$n.log
-    screen -d -S $n -m tio -b $b -t -l $file $d
-    if [ $? -ne 0 ]
-    then
-        exit 6
-    fi
-    echo "Logging '$n' ($d) at $b bauds in '$file'."
 done
 
 touch $locker
