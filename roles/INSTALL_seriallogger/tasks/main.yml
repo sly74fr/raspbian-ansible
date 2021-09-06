@@ -5,12 +5,13 @@
   with_items:
      - screen
      - tio
+#     - autotools
+#     - automake
   become: yes
 
 - set_fact: destination=~/Serial_Logger
 - name: Creating directory
   file: path={{ destination }} state=directory
-
 - name: Transfering files
   copy: mode="u+rwx" src=../files/{{ item }} dest={{ destination }}/
   with_items:
@@ -18,3 +19,28 @@
      - start_all.sh
      - stop_all.sh
      - README.txt
+
+# Install custom tio  
+- set_fact: custom_tio="tio-master-sly-20210906.zip"
+- set_fact: local_tio="../files/{{ custom_tio }}"
+- set_fact: remote_tio="~/{{ custom_tio }}"
+- set_fact: build_tio="~/tio-master/"
+- name: Custom TIO
+  block:
+    - name: Download sources
+      copy: mode="u+r" src={{ local_tio }} dest={{ remote_tio }}
+    - name: Unarchive sources
+      unarchive: src="{{ remote_tio }}" dest="~/" copy=no
+    - name: Regenerate Configure file
+      shell: "./autogen.sh"
+      args:
+        chdir: "{{ build_tio }}"
+    - name: Configure software
+      command: "./configure"
+      args:
+        chdir: "{{ build_tio }}"
+    - name: Build software
+      command: "make"
+      args:
+        chdir: "{{ build_tio }}"
+  ignore_errors: yes
