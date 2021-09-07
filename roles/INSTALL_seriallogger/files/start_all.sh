@@ -20,7 +20,8 @@ then
     echo "ERROR> tio not found at '$tio' !"
     exit 2
 fi
-$tio --version|head -1
+echo -n "$tio "
+$tio --version | head -1 | cut -d ' ' -f 2
 
 # Test LOCK file existance first
 locker="$dest/LOCK"
