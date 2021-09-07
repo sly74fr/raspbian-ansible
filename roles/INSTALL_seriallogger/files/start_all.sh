@@ -72,14 +72,13 @@ do
     d=`eval echo \${dev[$i]}`
     b=`eval echo \${baud[$i]}`
 
-#    if [ ! -f $device ]
     if [ ! -c $d ]
     then
         echo "WARNING> skipping device '$d' not found !"
-        ##exit 5
+        #exit 5
     else
         file=$full/$n.log
-        screen -d -S $n -m tio -b $b -t -l $file $d
+        screen -d -S $n -m $tio -b $b -t -l $file $d
         if [ $? -ne 0 ]
         then
             exit 6
