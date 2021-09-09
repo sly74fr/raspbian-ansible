@@ -21,12 +21,14 @@
   become: yes
   service: name=smbd state=stopped
 
-- name: Set Samba workgroup
+- name: Copy Samba configuration file
   become: yes
-  lineinfile:
-    path: /etc/samba/smb.conf
-    regexp: '^workgroup ='
-    line: 'workgroup = RASPBIAN'
+  copy:
+    src: ../files/smb.conf
+    dest: /etc/samba/smb.conf
+    owner: root
+    group: root
+    mode: '0644'
     backup: yes
 
 ### - name: Define Samba {{ exported_path }} share
@@ -54,3 +56,5 @@
 - name: Start and enable Samba
   become: yes
   service: name=smbd state=started enabled=yes
+
+- debug: msg="WARNING! Do not forget to add desired users to SMB with 'sudo smbpasswd -a username' before conecting..."
