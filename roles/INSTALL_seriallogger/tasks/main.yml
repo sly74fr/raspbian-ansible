@@ -5,8 +5,7 @@
   with_items:
      - screen
      - tio
-#     - autotools
-#     - automake
+     - autoconf
   become: yes
 
 - set_fact: destination=~/Serial_Logger
