@@ -1,8 +1,20 @@
 ---
 
 - name: Install common tools
+  apt: name={{ item }}
+  with_items:
+    - htop
+    - tree
+    - unzip
+    - firefox-esr
+    - nautilus
+    - gedit
+    - meld
+    - screen
+    - tio
+    - git
+    - telnet
+    - apt-file
+    - gawk
+  state: present
   become: yes
-  apt:
-    name: [htop, tree, unzip, firefox-esr, nautilus, gedit, meld, screen, tio, git, telnet, apt-file, gawk]
-    update_cache: yes
-    state: present
