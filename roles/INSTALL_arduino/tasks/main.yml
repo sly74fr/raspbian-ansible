@@ -1,0 +1,14 @@
+---
+
+- set_fact: custom="arduino-1.8.16-linuxarm.tar.xz"
+- set_fact: local="../files/{{ custom }}"
+- set_fact: remote="~/{{ custom }}"
+- name: Download package
+  copy: mode="u+r" src={{ local }} dest={{ remote }}
+  become: yes
+- name: Unarchive package in /opt
+  unarchive: src="{{ remote }}" dest="/opt/" copy=no
+  become: yes
+- name: Install package
+  shell: "/opt/arduino-1.8.16/install.sh"
+  become: yes
