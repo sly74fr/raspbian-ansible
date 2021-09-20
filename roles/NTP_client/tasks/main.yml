@@ -24,9 +24,13 @@
     regexp: '#FallbackNTP='
     replace: 'FallbackNTP='
 
+- name: Diable NTP (systemd timesyncd) service
+  become: yes
+  command: timedatectl set-ntp off
+
 - name: Enable NTP (systemd timesyncd) service
   become: yes
-  command: timedatectl set-ntp true
+  command: timedatectl set-ntp on
 
 - name: Show NTP (systemd timesyncd) status
   command: "timedatectl status"
