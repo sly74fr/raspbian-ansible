@@ -12,3 +12,11 @@
 - name: Install package
   shell: "/opt/arduino-1.8.16/install.sh"
   become: yes
+
+- set_fact: destination=~/.arduino15
+- name: Creating directory
+  file: path={{ destination }} state=directory
+- name: Transfering files
+  copy: mode="u+rwx" src=../files/{{ item }} dest={{ destination }}/
+  with_items:
+     - preferences.txt
