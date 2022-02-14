@@ -4,8 +4,7 @@
   apt: name={{ item }}
   with_items:
      - screen
-     - tio
-     - autoconf
+     - meson
   become: yes
   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
@@ -20,27 +19,29 @@
      - stop_all.sh
      - README.txt
 
-# Install custom tio  
-- set_fact: custom_tio="tio-master-sly-20210906.zip"
-- set_fact: local_tio="../files/{{ custom_tio }}"
-- set_fact: remote_tio="~/{{ custom_tio }}"
-- set_fact: build_tio="~/tio-master/"
-- name: Custom TIO
+# Install my latest tio
+- set_fact: destination={{ destination }}/TIO/
+- name: Creating directory
+  file: path={{ destination }} state=directory
+- name: Clone my tio GitHub repository
+  git:
+    repo: https://github.com/sly74fr/tio.git
+    dest: "{{ destination }}"
+    version: feature/macos_meson_build
+    update: yes
+
+- name: Build TIO
   block:
-    - name: Download sources
-      copy: mode="u+r" src={{ local_tio }} dest={{ remote_tio }}
-    - name: Unarchive sources
-      unarchive: src="{{ remote_tio }}" dest="~/" copy=no
-    - name: Regenerate Configure file
-      shell: "./autogen.sh"
-      args:
-        chdir: "{{ build_tio }}"
     - name: Configure software
-      command: "./configure"
+      shell: "meson build"
       args:
-        chdir: "{{ build_tio }}"
+        chdir: "{{ destination }}"
     - name: Build software
-      command: "make"
+      command: "meson compile -C build"
       args:
-        chdir: "{{ build_tio }}"
-  ignore_errors: yes
+        chdir: "{{ destination }}"
+    - name: Test software
+      command: "build/src/tio --version"
+      args:
+        chdir: "{{ destination }}"
+  ignore_errors: no
