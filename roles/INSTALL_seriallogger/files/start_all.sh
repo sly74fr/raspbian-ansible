@@ -87,6 +87,18 @@ do
     fi
 done
 
+# Start sudoed screened joker
+if ! test -z "$joker"
+then
+    file=$full/JOKER.log
+    sudo screen -d -S JOKER -L -Logfile $file -m $joker
+    if [ $? -ne 0 ]
+    then
+        exit 7
+    fi
+    echo "Logging '$joker' in '$file'."
+fi
+
 touch $locker
 
 exit 0

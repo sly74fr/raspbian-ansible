@@ -1,13 +1,15 @@
 #/bin/sh
 
-tio="$HOME/tio-master/src/tio"
+tio="$HOME/TIO/tio/build/src/tio"
 
-dest="$HOME/Logs/Test_MMC_v71"
+dest="$HOME/Logs/Test_MMC_v72"
 
-name=("IPMC" "IOIF" "AMC1" "AMC2" "AMC3" "AMC4")
+name=("IPMC" "AMC")
 
 dev_prefix="/dev/serial/by-id/usb-FTDI_TTL232R-3V3_"
 dev_suffix="-if00-port0"
-dev=("${dev_prefix}FTHBSUJF${dev_suffix}" "${dev_prefix}FTHBVLFH${dev_suffix}" "${dev_prefix}FTBRZJY3${dev_suffix}" "${dev_prefix}FTBS0YM9${dev_suffix}" "${dev_prefix}FTFMFDFT${dev_suffix}" "${dev_prefix}FTAK2D0W${dev_suffix}")
+dev=("${dev_prefix}FTHBUF0N${dev_suffix}" "${dev_prefix}FTAK3DC0${dev_suffix}")
 
-baud=("115200" "115200" "19200" "19200" "19200" "19200")
+baud=("115200" "19200")
+
+joker="/home/pi/Beagle/beagle-api-linux-armhf-v5.40/c/_output/capture_i2c_LAPP 128 0"
