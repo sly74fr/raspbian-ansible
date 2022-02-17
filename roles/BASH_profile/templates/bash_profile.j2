@@ -3,25 +3,74 @@
 # User specific environment and startup programs
 
 # Personnal prompt setup
+#PS1="[\u@\h:\W]\$ "
 PS1="[\e[7m\][\u@\h: \w - \t]\[\e[m\]\$ "
 
 # Personnal history setup
 export HISTCONTROL=erasedups
-export HISTSIZE=10000
+export HISTSIZE=100000
 shopt -s histappend
 
 # Personnal aliases
 alias ll='ls -lh'
 alias lll='ls -laih'
 alias rm='rm -i'
-alias cd..='cd ..'
 alias cd-='cd -'
+alias cd..='cd ..'
+alias ..='cd ..'
+alias ,,='cd ..'
+alias ...='cd ../..'
+alias ....='cd ..; cd ..; cd ..;'
+alias .....='cd ..; cd ..; cd ..; cd..'
+alias ......='cd ..; cd ..; cd ..; cd..; cd..'
+alias .......='cd ..; cd ..; cd ..; cd..; cd..; cd..'
+alias ..l='cd ..; l'
+alias treee='pwd;find . -path ./node_modules -prune -o -print | sort | sed '\''1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/| /g'\'''
+alias du='du -sh'
+alias df='df -h'
 alias quit='kill -15'
 alias psx='ps -x'
+alias psa='ps -aef'
 #alias make='make -j'
+alias h='history | grep '
+alias tf='tail -f'
+
+#######
+# GIT #
+#######
+alias push='git push -v -n && echo "GO?" && read && git push'
+alias pull='git pull -v --dry-run && echo "GO?" && read && git pull'
+alias stash='git stash -h'
+alias co='git checkout'
+alias ci='git commit'
+alias br='git branch -avv'
+alias di='git diff'
+alias st='git status'
+alias lo='git log --graph --all --decorate --date-order --name-status'
+# Displays lines of code per file in git repo and sum of all. Only looks for files in src directory.
+gloc() {
+    git ls-files \
+        | xargs file \
+        | grep text \
+        | grep -o ^.*: \
+        | tr -d ":" \
+        | grep ^src/.* \
+        | xargs wc -l 
+}
 
 # Personnal Functions
-
+cdl() { cd "$@" && ll; }
+l() {
+    if [ $# -eq 0 ]; then
+        ll
+    else
+        if [ -d "$1" ]; then
+            ll $1
+        else
+            cat $1
+        fi
+    fi
+}
 mkcd () { mkdir "$1" && cd "$1"; }
 
 histedit () { history -a ; vi ~/.bash_history ; history -r ; }
@@ -30,7 +79,7 @@ hg()
     if [ $# -lt 1 ]; then
         history
     else
-    	history | grep $1
+        history | grep $1
     fi
 }
 
