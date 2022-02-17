@@ -27,6 +27,9 @@ do
     screen -X -S $n quit
 done
 
+echo "Stopping 'JOKER' log."
+sudo screen -X -S JOKER quit
+
 rm -f $locker
 
 exit 0
