@@ -38,17 +38,18 @@ alias tf='tail -f'
 #######
 # GIT #
 #######
-alias push='git push -v -n && echo "GO?" && read && git push'
-alias pull='git pull -v --dry-run && echo "GO?" && read && git pull'
-alias stash='git stash -h'
 alias co='git checkout'
-alias ci='git commit'
+alias ci='git commit -v'
 alias br='git branch -avv'
 alias di='git diff'
-alias st='git status'
+alias st='git status --column'
 alias lo='git log --graph --all --decorate --date-order --name-status'
+alias gcp='git cherry-pick'
+alias push='git push -v -n && echo "Go ???" && read && git push'
+alias pull='git pull -v --dry-run && echo "Go ???" && read && git pull'
+alias stash='git stash -h'
 # Displays lines of code per file in git repo and sum of all. Only looks for files in src directory.
-gloc() {
+gwc() {
     git ls-files \
         | xargs file \
         | grep text \
@@ -71,9 +72,9 @@ l() {
         fi
     fi
 }
-mkcd () { mkdir "$1" && cd "$1"; }
+mkcd() { mkdir -p "$1" && cd "$1"; }
 
-histedit () { history -a ; vi ~/.bash_history ; history -r ; }
+histedit() { history -a ; vi ~/.bash_history ; history -r ; }
 hg()
 {
     if [ $# -lt 1 ]; then
