@@ -123,5 +123,6 @@ search()
 {
     eval TOKEN=\${$#}
     eval PATHES=\${*%${!#}}
-    grep -rin $TOKEN $PATHES
+    grep -rain $TOKEN $PATHES
 }
+
