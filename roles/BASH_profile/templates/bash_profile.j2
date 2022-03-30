@@ -34,8 +34,10 @@ alias psxg='ps -x|grep'
 alias psa='ps -aef'
 alias psag='ps -aef|grep'
 #alias make='make -j'
-alias h='history | grep '
 alias tf='tail -f'
+alias h='history | grep '
+alias ha='history -a'
+alias hl='history -r'
 
 #######
 # GIT #
@@ -76,7 +78,7 @@ l() {
 }
 mkcd() { mkdir -p "$1" && cd "$1"; }
 
-histedit() { history -a ; vi ~/.bash_history ; history -r ; }
+he() { history -a ; vi ~/.bash_history ; history -r ; }
 hg()
 {
     if [ $# -lt 1 ]; then
@@ -125,4 +127,3 @@ search()
     eval PATHES=\${*%${!#}}
     grep -rain $TOKEN $PATHES
 }
-
