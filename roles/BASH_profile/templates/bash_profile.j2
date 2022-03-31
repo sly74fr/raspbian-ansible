@@ -83,9 +83,9 @@ he() { history -a ; vi ~/.bash_history ; history -r ; }
 hg()
 {
     if [ $# -lt 1 ]; then
-        history
+        history | awk '{$1=""; print $0}'
     else
-        history | grep $1
+        history | awk '{$1=""; print $0}' | grep $1
     fi
 }
 
@@ -128,3 +128,6 @@ search()
     eval PATHES=\${*%${!#}}
     grep -rain $TOKEN $PATHES
 }
+
+# Machine specific settings
+
