@@ -91,9 +91,14 @@ he() { history -a ; vi ~/.bash_history ; history -r ; }
 h()
 {
     if [ $# -lt 1 ]; then
-        history | awk '{$1=""; print $0}'
+        # history | awk '{$1=""; print $0}'
+        ### history | awk '{$1=""; print $0}' | sed -e 's/^[ \t]*//'
+        # Print all history but without history order ID and first char (e.g a space)
+        history | awk '{$1=""; print substr($0, 2, length($0))}'
     else
-        history | awk '{$1=""; print $0}' | grep $1
+        # history | awk '{$1=""; print $0}' | grep $1
+        ### history | awk '{$1=""; print $0}' | sed -e 's/^[ \t]*//' | grep $1
+        h | grep $1
     fi
 }
 
