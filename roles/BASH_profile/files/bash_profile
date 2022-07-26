@@ -164,15 +164,13 @@ he()
 }
 h()
 {
-    if [ $# -lt 1 ]; then
-        # history | awk '{$1=""; print $0}'
-        ### history | awk '{$1=""; print $0}' | sed -e 's/^[ \t]*//'
-        # Print all history but without history order ID and first char (e.g a space)
+    eval LAST_ARG=\${$#}
+    eval ARGS_REST=\${*%${!#}}
+
+    if [ $# -le 0 ]; then
         history | awk '{$1=""; print substr($0, 2, length($0))}'
     else
-        # history | awk '{$1=""; print $0}' | grep $1
-        ### history | awk '{$1=""; print $0}' | sed -e 's/^[ \t]*//' | grep $1
-        h | grep $1
+        h $ARGS_REST | grep $LAST_ARG
     fi
 }
 
