@@ -31,7 +31,7 @@ locker="$dest/LOCK"
 if [ -f $locker ]
 then
     echo "ERROR: a test is already ongoing !!!"
-    if [ -s $LOCKER ] # Display the message in the LOCK file if any
+    if [ -s $locker ] # Display the message in the LOCK file if any
     then
         echo "========="
         cat $locker
