@@ -40,11 +40,41 @@ alias hl='history -r'
 #######
 # GIT #
 #######
+alias ghh="echo -e \
+alias gh  = 'git help' '\n'\
+alias gst = 'git status --column' '\n'\
+alias glo = 'git log --graph --all --decorate --date-order --name-status' '\n'\
+alias gdi = 'git diff' '\n'\
+alias gdc = 'git diff --cached' '\n'\
+alias gad = 'git add' '\n'\
+alias gap = 'git add -p' '\n'\
+alias gci = 'git commit -v' '\n'\
+alias gcp = 'git cherry-pick' '\n'\
+alias gco = 'git checkout' '\n'\
+alias gbl = 'git branch -vv' '\n'\
+alias gbr = 'git branch -avv' '\n'\
+alias gbd = 'gbr && echo \"Delete ???\" && read && git branch -D' '\n'\
+alias grv = 'git remote -v' '\n'\
+alias gru = 'gbr && echo \"Prune ???\" && read && git remote update origin --prun' '\n'\
+alias gph = 'git push -v -n && echo \"Push ???\" && read && git push' '\n'\
+alias gpl = 'git pull -v --dry-run && echo \"Pull ???\" && read && git pull' '\n'\
+alias gso = 'git show' '\n'\
+alias gsh = 'git stash -h' '\n'\
+alias gsl = 'git stash list' '\n'\
+alias gss = 'git stash show' '\n'\
+alias gsa = 'git stash push' '\n'\
+alias gsd = 'gsl && echo \"Drop ???\" && read && git stash drop' '\n'\
+alias gsp = 'gsl && echo \"Pop ???\" && read && git stash pop' '\n'\
+alias guc = 'git reset --soft' '\n'\
+alias gus = 'git restore --staged'
+"
 alias gh='git help'
 alias gst='git status --column'
 alias glo='git log --graph --all --decorate --date-order --name-status'
 alias gdi='git diff'
+alias gdc='git diff --cached'
 alias gad='git add'
+alias gap='git add -p'
 alias gci='git commit -v'
 alias gcp='git cherry-pick'
 alias gco='git checkout'
@@ -55,12 +85,15 @@ alias grv='git remote -v'
 alias gru='gbr && echo "Prune ???" && read && git remote update origin --prun'
 alias gph='git push -v -n && echo "Push ???" && read && git push'
 alias gpl='git pull -v --dry-run && echo "Pull ???" && read && git pull'
+alias gso='git show'
 alias gsh='git stash -h'
 alias gsl='git stash list'
 alias gss='git stash show'
 alias gsa='git stash push'
 alias gsd='gsl && echo "Drop ???" && read && git stash drop'
 alias gsp='gsl && echo "Pop ???" && read && git stash pop'
+alias guc='git reset --soft'
+alias gus='git restore --staged'
 # Displays lines of code per file in git repo and sum of all. Only looks for files in src directory.
 gwc() {
     git ls-files \
