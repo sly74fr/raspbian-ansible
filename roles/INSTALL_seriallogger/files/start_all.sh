@@ -41,17 +41,6 @@ then
     exit -1
 fi
 
-# Create new directory
-now=`date "+%Y.%m.%d.%H.%M.%S"`
-full="$dest/$now/"
-echo $full
-mkdir -p ${full}
-if [ $? -ne 0 ]
-then
-    exit 3
-fi
-ln -sfn $full $dest/CURRENT # Update CURRENT symlink to newly created directory
-
 # Assert configuration arrays coherence
 name_size=${#name[@]}
 dev_size=${#dev[@]}
@@ -64,8 +53,19 @@ baud_size=${#baud[@]}
 if [ $baud_size != $dev_size ]
 then
     echo "ERROR> arrays size mismatch !"
-    exit 4
+    exit 5
 fi    
+
+# Create new directory
+now=`date "+%Y.%m.%d.%H.%M.%S"`
+full="$dest/$now/"
+echo $full
+mkdir -p ${full}
+if [ $? -ne 0 ]
+then
+    exit 6
+fi
+ln -sfn $full $dest/CURRENT # Update CURRENT symlink to newly created directory
 
 # Start screened tio
 size=`expr $name_size - 1`
