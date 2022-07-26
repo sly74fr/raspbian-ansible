@@ -24,8 +24,9 @@
   git:
     repo: https://github.com/sly74fr/tio.git
     dest: "{{ destination }}"
-    version: feature/macos_meson_build
+#    version: feature/macos_meson_build
     update: yes
+    force: yes
 
 - name: Build TIO
   block:
