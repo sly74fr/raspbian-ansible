@@ -3,8 +3,6 @@
 # User specific environment and startup programs
 
 # Personnal prompt setup
-#PS1="[\u@\h:\W]\$ "
-#PS1="[\e[7m\][\u@\h: \w - \t]\[\e[m\]\$ "
 PS1="\[\033[7m\][\u@\h: \w - \t]\[\033[0m\] \$ "
 
 # Personnal history setup
@@ -16,29 +14,28 @@ shopt -s histappend
 alias ll='ls -lh'
 alias lll='ls -laih'
 alias rm='rm -i'
-alias cd-='cd -'
-alias cd..='cd ..'
-alias ..='cd ..'
-alias ,,='cd ..'
-alias ...='cd ../..'
-alias ....='cd ..; cd ..; cd ..;'
-alias .....='cd ..; cd ..; cd ..; cd..'
-alias ......='cd ..; cd ..; cd ..; cd..; cd..'
-alias .......='cd ..; cd ..; cd ..; cd..; cd..; cd..'
-alias ..l='cd ..; l'
+alias c-='c -'
+alias ..='c ..'
+alias ,,='c ..'
+alias ...='c ../..'
+alias ....='c ../../..'
+alias .....='c ../../../..'
+alias ......='c ../../../../..'
+alias .......='c ../../../../../..'
 alias treee='pwd;find . -path ./node_modules -prune -o -print | sort | sed '\''1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/| /g'\'''
 alias du='du -sh'
 alias df='df -h'
 alias quit='kill -15'
 alias psx='ps -x'
-alias psxg='ps -x|grep'
+alias psg='ps -x | grep'
 alias psa='ps -aef'
-alias psag='ps -aef|grep'
-#alias make='make -j'
+alias psag='ps -aef | grep'
+alias ht='htop -t -d 0.5'
 alias tf='tail -f'
-alias h='history | grep '
+alias hg='history | grep'
 alias ha='history -a'
 alias hl='history -r'
+#alias make='make -j'
 
 #######
 # GIT #
@@ -76,7 +73,7 @@ gwc() {
 }
 
 # Personnal Functions
-cdl() { cd "$@" && ll; }
+c() { cd "$@" && ll; }
 l() {
     if [ $# -eq 0 ]; then
         ll
@@ -91,7 +88,7 @@ l() {
 mkcd() { mkdir -p "$1" && cd "$1"; }
 
 he() { history -a ; vi ~/.bash_history ; history -r ; }
-hg()
+h()
 {
     if [ $# -lt 1 ]; then
         history | awk '{$1=""; print $0}'
@@ -141,4 +138,3 @@ search()
 }
 
 # Machine specific settings
-
