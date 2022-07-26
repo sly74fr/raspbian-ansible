@@ -27,8 +27,9 @@
 #    version: feature/macos_meson_build
     update: yes
     force: yes
+  register: git_clone
 
-- name: Build TIO
+- name: Build TIO (only if needed)
   block:
     - name: Configure software
       shell: "meson build"
@@ -43,3 +44,4 @@
       args:
         chdir: "{{ destination }}"
   ignore_errors: no
+  when: git_clone.changed
