@@ -36,8 +36,11 @@ do
     screen -X -S $n quit
 done
 
-echo "Stopping 'JOKER' log."
-sudo screen -X -S JOKER quit
+if ! test -z "$joker"
+then
+    echo "Stopping 'JOKER' log."
+    sudo screen -X -S JOKER quit >/dev/null 2>&1 || true
+fi
 
 rm -f $locker
 
