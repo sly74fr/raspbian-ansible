@@ -33,7 +33,7 @@ for i in `seq 0 $size`
 do
     n=`eval echo \${name[$i]}`
     echo "Stopping '$n' log."
-    screen -X -S $n quit
+    screen -X -S $n quit >/dev/null 2>&1 || true
 done
 
 if ! test -z "$joker"
