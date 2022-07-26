@@ -109,7 +109,8 @@ alias gsd='gsl && confirm "Drop" && git stash drop'
 alias gsp='gsl && confirm "Pop" && git stash pop'
 alias gus='echo $1 && confirm "Unstage" && git restore --staged'
 # Displays lines of code per file in git repo and sum of all. Only looks for files in src directory.
-gwc() {
+gwc()
+{
     git ls-files \
         | xargs file \
         | grep text \
@@ -139,7 +140,8 @@ guc()
 
 # Personnal Functions
 c() { cd "$@" && ll; }
-l() {
+l()
+{
     if [ $# -eq 0 ]; then
         ll
     else
@@ -152,7 +154,12 @@ l() {
 }
 mkcd() { mkdir -p "$1" && cd "$1"; }
 
-he() { history -a ; vi ~/.bash_history ; history -r ; }
+he()
+{
+    history -a
+    vi ~/.bash_history
+    history -r
+}
 h()
 {
     if [ $# -lt 1 ]; then
