@@ -1,7 +1,5 @@
 #/bin/sh
 
-tio="$HOME/TIO/tio/build/src/tio"
-
 dest="$HOME/Logs/Test_MMC_v72"
 
 name=("IPMC" "AMC")

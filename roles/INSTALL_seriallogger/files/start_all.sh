@@ -1,10 +1,8 @@
 #/bin/sh
 
-tio=`which tio`
-dest="$HOME/Logs"
-name=("Foo" "Bar")
-dev=("/dev/ttyUSB0" "/dev/ttyUSB1")
-baud=("115200" "19200")
+tio="./TIO/build/src/tio"
+### tio=`which tio`
+joker=""
 
 # Read configuration file to overload previous variables
 source $1 # Configuration file

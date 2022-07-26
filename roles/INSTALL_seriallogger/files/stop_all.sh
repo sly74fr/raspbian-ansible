@@ -1,7 +1,6 @@
 #/bin/sh
 
-dest="$HOME/Logs"
-name=("Foo" "Bar")
+joker=""
 
 # Read configuration file to overload previous variables
 source $1 # Configuration file
