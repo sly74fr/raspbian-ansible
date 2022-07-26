@@ -12,12 +12,9 @@
 - name: Creating directory
   file: path={{ destination }} state=directory
 - name: Transfering files
-  copy: mode="u+rwx" src=../files/{{ item }} dest={{ destination }}/
-  with_items:
-     - conf.sh
-     - start_all.sh
-     - stop_all.sh
-     - README.txt
+  copy: backup=yes mode="u+rwx" src={{ item }} dest={{ destination }}/
+  with_fileglob:
+    - "../files/*"
 
 # Install my latest tio
 - set_fact: destination={{ destination }}/TIO/
