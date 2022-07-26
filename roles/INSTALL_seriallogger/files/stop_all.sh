@@ -43,5 +43,6 @@ then
 fi
 
 rm -f $locker
+echo "LOCK file removed."
 
 exit 0

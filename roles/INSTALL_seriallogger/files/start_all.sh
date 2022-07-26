@@ -83,13 +83,12 @@ do
     if [ ! -c $d ]
     then
         echo "WARNING> skipping device '$d' not found !"
-        #exit 5
     else
         file=$full/$n.log
         screen -d -S $n -m $tio -b $b $d -c none -t --timestamp-format=iso8601 --log-strip --log-file=$file 
         if [ $? -ne 0 ]
         then
-            exit 6
+            exit 7
         fi
         echo "Logging '$n' ($d) at $b bauds in '$file'."
     fi
@@ -102,7 +101,7 @@ then
     sudo screen -d -S JOKER -L -Logfile $file -m $joker
     if [ $? -ne 0 ]
     then
-        exit 7
+        exit 8
     fi
     echo "Logging '$joker' in '$file'."
 fi
