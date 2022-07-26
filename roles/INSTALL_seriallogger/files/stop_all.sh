@@ -23,6 +23,11 @@ then
 fi
 
 name_size=${#name[@]}
+if [ $name_size == 0 ]
+then
+    echo "ERROR> name array is empty !"
+    exit 2
+fi    
 size=`expr $name_size - 1`
 for i in `seq 0 $size`
 do

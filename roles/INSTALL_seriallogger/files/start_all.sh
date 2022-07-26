@@ -43,6 +43,11 @@ fi
 
 # Assert configuration arrays coherence
 name_size=${#name[@]}
+if [ $name_size == 0 ]
+then
+    echo "ERROR> name array is empty !"
+    exit 3
+fi    
 dev_size=${#dev[@]}
 if [ $name_size != $dev_size ]
 then
