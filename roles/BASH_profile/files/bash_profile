@@ -159,6 +159,7 @@ SEARCH()
 alias ghh='GIT_HELP'
 alias gst='git status --column'
 alias glo='git log --graph --all --decorate --date-order --name-status'
+alias gls='git log --oneline --all'
 alias gdi='git diff'
 alias gdc='git diff --cached'
 alias gad='git add'
