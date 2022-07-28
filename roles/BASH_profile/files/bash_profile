@@ -211,7 +211,7 @@ GIT_SHOW_COMMIT()
     if [ $# -lt 1 ]; then
         gso HEAD
     else
-        git show $1
+        git show $@
     fi
 }
 GIT_UNDO_COMMIT()
