@@ -104,7 +104,6 @@ alias gbr='git branch -avv'
 alias gbd='gbr && confirm "Delete" && git branch -D'
 alias grv='git remote -v'
 alias gru='gbr && confirm "Prune" && git remote update origin --prun'
-alias gph='git push -v -n && confirm "Push" && git push'
 alias gpl='git pull -v --dry-run && confirm "Pull" && git pull'
 alias gsh='git stash -h'
 alias gsl='git stash list'
@@ -141,6 +140,12 @@ guc()
         confirm "Undo commit"
         git reset --soft $1
     fi
+}
+gph()
+{
+    git push -v -n $1
+    confirm "Push"
+    git push $1
 }
 
 # Personnal Functions
