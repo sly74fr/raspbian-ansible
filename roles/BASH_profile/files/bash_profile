@@ -83,7 +83,7 @@ alias gss='git stash show'
 alias gsa='git stash push'
 alias gsd='gsl && confirm "Drop" && git stash drop'
 alias gsp='gsl && confirm "Pop" && git stash pop'
-alias gus='echo $1 && confirm "Unstage" && git restore --staged'
+alias gus='confirm "Unstage" && git restore --staged'
 GIT_HELP()
 {
     if [ $# -eq 0 ]; then
