@@ -158,6 +158,15 @@ l()
     fi
 }
 mkcd() { mkdir -p "$1" && cd "$1"; }
+rr()
+{
+    if [ ! -e "$1" ]; then
+        echo "File not found"
+        return 1
+    fi
+    ll $@
+    confirm "RECURSIVELY Delete" && rm -rf $@
+}
 
 he()
 {
