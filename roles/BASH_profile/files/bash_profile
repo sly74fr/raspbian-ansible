@@ -15,10 +15,15 @@ shopt -s histappend
 #####################
 alias ll='ls -lh'
 alias lll='ls -laih'
+alias mkcd='MAKE_DIR_AND_MOVE_IN'
 alias rm='rm -i'
 alias r='rm'
+alias rr='RECURSIVE_REMOVE'
 alias g='grep -ain'
 alias gr='g -r'
+alias s='SEARCH'
+alias swap='SWAP_2_FILES'
+alias c='CD_AND_LL'
 alias c-='c -'
 alias ..='c ..'
 alias ,,='c ..'
@@ -37,15 +42,17 @@ alias psa='ps -aef'
 alias psag='ps -aef | grep'
 alias ht='htop -t -d 0.5'
 alias tf='tail -f'
+alias h='HISTORY_SEARCH'
 alias hg='history | grep'
 alias ha='history -a'
+alias he='HISTORY_EDIT'
 alias hl='history -r'
 #alias make='make -j'
 
 #######################
 # Personnal Functions #
 #######################
-confirm()
+HALT_TO_CONFIRM()
 {
     MSG="Please confirm"
     if [ $# -gt 0 ]; then
@@ -61,7 +68,7 @@ confirm()
     printf "%${LEN}s\n" '' | tr '[:blank:]' '~'
 }
 
-c() { cd "$@" && ll; }
+CD_AND_LL() { cd "$@" && ll; }
 l()
 {
     if [ $# -eq 0 ]; then
@@ -74,24 +81,24 @@ l()
         fi
     fi
 }
-mkcd() { mkdir -p "$1" && cd "$1"; }
-rr()
+MAKE_DIR_AND_MOVE_IN() { mkdir -p "$1" && cd "$1"; }
+RECURSIVE_REMOVE()
 {
     if [ ! -e "$1" ]; then
         echo "File not found"
         return 1
     fi
     ll $@
-    confirm "RECURSIVELY Delete" && rm -rf $@
+    HALT_TO_CONFIRM "RECURSIVELY Delete" && rm -rf $@
 }
 
-he()
+HISTORY_EDIT()
 {
     history -a
     vi ~/.bash_history
     history -r
 }
-h()
+HISTORY_SEARCH()
 {
     eval LAST_ARG=\${$#}
     eval ARGS_REST=\${*%${!#}}
@@ -103,8 +110,7 @@ h()
     fi
 }
 
-# Swap two file's content
-swap()
+SWAP_2_FILES()
 {
     if [ $# -lt 2 ]; then
         echo "usage: swap file1 file2"
@@ -137,7 +143,7 @@ swap()
 }
 
 # Reversed arg order grep
-s()
+SEARCH()
 {
     PATHES="."
     if [ $# -gt 1 ]; then
@@ -164,19 +170,19 @@ alias gcp='git cherry-pick'
 alias gco='git checkout'
 alias gbl='git branch -vv'
 alias gbr='git branch -avv'
-alias gbd='gbr && confirm "Delete" && git branch -D'
+alias gbd='gbr && HALT_TO_CONFIRM "Delete" && git branch -D'
 alias grv='git remote -v'
-alias gru='gbr && confirm "Prune" && git remote update origin --prune'
+alias gru='gbr && HALT_TO_CONFIRM "Prune" && git remote update origin --prune'
 alias gpu='git push --set-upstream origin'
 alias gph='GIT_PUSH'
-alias gpl='git pull -v --dry-run && confirm "Pull" && git pull'
+alias gpl='git pull -v --dry-run && HALT_TO_CONFIRM "Pull" && git pull'
 alias gsh='git stash -h'
 alias gsl='git stash list'
 alias gss='git stash show'
 alias gsa='git stash push'
-alias gsd='gsl && confirm "Drop" && git stash drop'
-alias gsp='gsl && confirm "Pop" && git stash pop'
-alias gus='confirm "Unstage" && git restore --staged'
+alias gsd='gsl && HALT_TO_CONFIRM "Drop" && git stash drop'
+alias gsp='gsl && HALT_TO_CONFIRM "Pop" && git stash pop'
+alias gus='HALT_TO_CONFIRM "Unstage" && git restore --staged'
 alias gwc='GIT_SRC_LINES_OF_CODE'
 alias gso='GIT_SHOW_COMMIT'
 alias guc='GIT_UNDO_COMMIT'
@@ -213,14 +219,14 @@ GIT_UNDO_COMMIT()
         guc HEAD~1
     else
         gso $1
-        confirm "Undo commit"
+        HALT_TO_CONFIRM "Undo commit"
         git reset --soft $1
     fi
 }
 GIT_PUSH()
 {
     git push -v -n $1
-    confirm "Push"
+    HALT_TO_CONFIRM "Push"
     git push $1
 }
 
