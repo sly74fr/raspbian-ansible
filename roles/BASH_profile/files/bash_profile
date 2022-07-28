@@ -10,7 +10,9 @@ export HISTCONTROL=ignorespace:ignoredups:erasedups
 export HISTSIZE=100000
 shopt -s histappend
 
-# Personnal aliases
+#####################
+# Personnal aliases #
+#####################
 alias ll='ls -lh'
 alias lll='ls -laih'
 alias rm='rm -i'
@@ -40,6 +42,9 @@ alias ha='history -a'
 alias hl='history -r'
 #alias make='make -j'
 
+#######################
+# Personnal Functions #
+#######################
 confirm()
 {
     MSG="Please confirm"
@@ -56,83 +61,6 @@ confirm()
     printf "%${LEN}s\n" '' | tr '[:blank:]' '~'
 }
 
-#######
-# GIT #
-#######
-alias ghh='GIT_HELP'
-alias gst='git status --column'
-alias glo='git log --graph --all --decorate --date-order --name-status'
-alias gdi='git diff'
-alias gdc='git diff --cached'
-alias gad='git add'
-alias gap='git add -p'
-alias gci='git commit -v'
-alias gca='git commit --amend'
-alias gcp='git cherry-pick'
-alias gco='git checkout'
-alias gbl='git branch -vv'
-alias gbr='git branch -avv'
-alias gbd='gbr && confirm "Delete" && git branch -D'
-alias grv='git remote -v'
-alias gru='gbr && confirm "Prune" && git remote update origin --prune'
-alias gpu='git push --set-upstream origin'
-alias gph='GIT_PUSH'
-alias gpl='git pull -v --dry-run && confirm "Pull" && git pull'
-alias gsh='git stash -h'
-alias gsl='git stash list'
-alias gss='git stash show'
-alias gsa='git stash push'
-alias gsd='gsl && confirm "Drop" && git stash drop'
-alias gsp='gsl && confirm "Pop" && git stash pop'
-alias gus='confirm "Unstage" && git restore --staged'
-alias gwc='GIT_SRC_LINES_OF_CODE'
-alias gso='GIT_SHOW_COMMIT'
-alias guc='GIT_UNDO_COMMIT'
-GIT_HELP()
-{
-    if [ $# -eq 0 ]; then
-        alias | grep "alias g[a-z][a-z]" | sed "s/alias //g" | sed "s/=/ = /g" | tr -d "'" | sort
-    else
-        git help $1
-    fi
-}
-# Displays lines of code per file in git repo and sum of all. Only looks for files in src directory.
-GIT_SRC_LINES_OF_CODE()
-{
-    git ls-files \
-        | xargs file \
-        | grep text \
-        | grep -o ^.*: \
-        | tr -d ":" \
-        | grep ^src/.* \
-        | xargs wc -l 
-}
-GIT_SHOW_COMMIT()
-{
-    if [ $# -lt 1 ]; then
-        gso HEAD
-    else
-        git show $1
-    fi
-}
-GIT_UNDO_COMMIT()
-{
-    if [ $# -lt 1 ]; then
-        guc HEAD~1
-    else
-        gso $1
-        confirm "Undo commit"
-        git reset --soft $1
-    fi
-}
-GIT_PUSH()
-{
-    git push -v -n $1
-    confirm "Push"
-    git push $1
-}
-
-# Personnal Functions
 c() { cd "$@" && ll; }
 l()
 {
@@ -219,4 +147,82 @@ s()
     gr $TOKEN $PATHES
 }
 
-# Machine specific settings
+#######
+# GIT #
+#######
+alias ghh='GIT_HELP'
+alias gst='git status --column'
+alias glo='git log --graph --all --decorate --date-order --name-status'
+alias gdi='git diff'
+alias gdc='git diff --cached'
+alias gad='git add'
+alias gap='git add -p'
+alias gci='git commit -v -p'
+alias gca='git commit --amend'
+alias gcp='git cherry-pick'
+alias gco='git checkout'
+alias gbl='git branch -vv'
+alias gbr='git branch -avv'
+alias gbd='gbr && confirm "Delete" && git branch -D'
+alias grv='git remote -v'
+alias gru='gbr && confirm "Prune" && git remote update origin --prune'
+alias gpu='git push --set-upstream origin'
+alias gph='GIT_PUSH'
+alias gpl='git pull -v --dry-run && confirm "Pull" && git pull'
+alias gsh='git stash -h'
+alias gsl='git stash list'
+alias gss='git stash show'
+alias gsa='git stash push'
+alias gsd='gsl && confirm "Drop" && git stash drop'
+alias gsp='gsl && confirm "Pop" && git stash pop'
+alias gus='confirm "Unstage" && git restore --staged'
+alias gwc='GIT_SRC_LINES_OF_CODE'
+alias gso='GIT_SHOW_COMMIT'
+alias guc='GIT_UNDO_COMMIT'
+GIT_HELP()
+{
+    if [ $# -eq 0 ]; then
+        alias | grep "alias g[a-z][a-z]" | sed "s/alias //g" | sed "s/=/ = /g" | tr -d "'" | sort
+    else
+        git help $1
+    fi
+}
+# Displays lines of code per file in git repo and sum of all. Only looks for files in src directory.
+GIT_SRC_LINES_OF_CODE()
+{
+    git ls-files \
+        | xargs file \
+        | grep text \
+        | grep -o ^.*: \
+        | tr -d ":" \
+        | grep ^src/.* \
+        | xargs wc -l 
+}
+GIT_SHOW_COMMIT()
+{
+    if [ $# -lt 1 ]; then
+        gso HEAD
+    else
+        git show $1
+    fi
+}
+GIT_UNDO_COMMIT()
+{
+    if [ $# -lt 1 ]; then
+        guc HEAD~1
+    else
+        gso $1
+        confirm "Undo commit"
+        git reset --soft $1
+    fi
+}
+GIT_PUSH()
+{
+    git push -v -n $1
+    confirm "Push"
+    git push $1
+}
+
+#############################
+# Machine specific settings #
+#############################
