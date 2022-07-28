@@ -189,7 +189,7 @@ alias guc='GIT_UNDO_COMMIT'
 GIT_HELP()
 {
     if [ $# -eq 0 ]; then
-        alias | grep "alias g[a-z][a-z]" | sed "s/alias //g" | sed "s/=/ = /g" | tr -d "'" | sort
+        alias | grep "alias g[a-z][a-z]='" | sed "s/alias //g" | sed "s/=/ = /g" | tr -d "'" | sort
     else
         git help $1
     fi
