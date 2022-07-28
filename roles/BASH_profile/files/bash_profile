@@ -212,9 +212,12 @@ swap()
 # Reversed arg order grep
 s()
 {
+    PATHES="."
+    if [ $# -gt 1 ]; then
+        eval PATHES=\${*%${!#}}
+    fi
     eval TOKEN=\${$#}
-    eval PATHES=\${*%${!#}}
-    grep -rain $TOKEN $PATHES
+    gr $TOKEN $PATHES
 }
 
 # Machine specific settings
