@@ -209,7 +209,8 @@ swap()
     return 0
 }
 
-search()
+# Reversed arg order grep
+s()
 {
     eval TOKEN=\${$#}
     eval PATHES=\${*%${!#}}
