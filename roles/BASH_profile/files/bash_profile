@@ -76,6 +76,7 @@ alias gbd='gbr && confirm "Delete" && git branch -D'
 alias grv='git remote -v'
 alias gru='gbr && confirm "Prune" && git remote update origin --prune'
 alias gpu='git push --set-upstream origin'
+alias gph='GIT_PUSH'
 alias gpl='git pull -v --dry-run && confirm "Pull" && git pull'
 alias gsh='git stash -h'
 alias gsl='git stash list'
@@ -84,6 +85,9 @@ alias gsa='git stash push'
 alias gsd='gsl && confirm "Drop" && git stash drop'
 alias gsp='gsl && confirm "Pop" && git stash pop'
 alias gus='confirm "Unstage" && git restore --staged'
+alias gwc='GIT_SRC_LINES_OF_CODE'
+alias gso='GIT_SHOW_COMMIT'
+alias guc='GIT_UNDO_COMMIT'
 GIT_HELP()
 {
     if [ $# -eq 0 ]; then
@@ -93,7 +97,7 @@ GIT_HELP()
     fi
 }
 # Displays lines of code per file in git repo and sum of all. Only looks for files in src directory.
-gwc()
+GIT_SRC_LINES_OF_CODE()
 {
     git ls-files \
         | xargs file \
@@ -103,7 +107,7 @@ gwc()
         | grep ^src/.* \
         | xargs wc -l 
 }
-gso()
+GIT_SHOW_COMMIT()
 {
     if [ $# -lt 1 ]; then
         gso HEAD
@@ -111,7 +115,7 @@ gso()
         git show $1
     fi
 }
-guc()
+GIT_UNDO_COMMIT()
 {
     if [ $# -lt 1 ]; then
         guc HEAD~1
@@ -121,7 +125,7 @@ guc()
         git reset --soft $1
     fi
 }
-gph()
+GIT_PUSH()
 {
     git push -v -n $1
     confirm "Push"
