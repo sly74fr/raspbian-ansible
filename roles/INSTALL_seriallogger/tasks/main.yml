@@ -16,11 +16,13 @@
   with_fileglob:
     - "../files/*"
 
-# Install my latest tio
+# Install latest tio
 - set_fact: destination={{ destination }}/TIO/
+### - name: Recursively removing directory
+###   file: path={{ destination }} state=absent
 - name: Creating directory
   file: path={{ destination }} state=directory
-- name: Clone my tio GitHub repository
+- name: Clone tio GitHub repository
   git:
     repo: https://github.com/sly74fr/tio.git
     dest: "{{ destination }}"
