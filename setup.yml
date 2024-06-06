@@ -6,6 +6,7 @@
 
   roles:
     - DATE_syncing
+    - BOOT_config
     - OS_update
     - OS_reboot
     - DATE_syncing
@@ -13,9 +14,9 @@
     - BASH_profile
     - UTC_timezone
     - US_locale
-    - AZERTY_keyboard
     - DISABLE_swap
-    - { role: NTP_client, ntp_config_server: '1.ubuntu.pool.ntp.org 2.ubuntu.pool.ntp.org' }
+    - { role: NTP_client, ntp_config_server: '{{ ntp_servers }}' }
     - INSTALL_commons
-    - { role: OS_hostname, hostname: "raspbian-test" }
+    - INSTALL_seriallogger
+    - { role: OS_hostname, hostname: "{{ inventory_hostname_short }}" }
     - { role: OS_reboot, waiting: no }

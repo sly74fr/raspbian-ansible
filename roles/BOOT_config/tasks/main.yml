@@ -1,0 +1,5 @@
+---
+
+- name: Enabling HDMI output even if no HDMI monitor is detected
+  lineinfile: dest="/boot/config.txt" line="hdmi_force_hotplug=1"
+  become: yes

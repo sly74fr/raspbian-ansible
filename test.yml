@@ -6,6 +6,7 @@
 
   roles:
 #    - DATE_syncing
+#    - BOOT_config
 #    - OS_update
 #    - OS_reboot
 #    - { role: OS_reboot, waiting: no }
