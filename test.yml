@@ -28,3 +28,4 @@
 #    - INSTALL_AtmelAvrToolchain
 #    - { role: OS_hostname, hostname: "EPC-LAR-DRO-01" }
 #    - SAMBA_server
+#    - INSTALL_oled_stats

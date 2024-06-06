@@ -1,0 +1,55 @@
+### https://www.raspberrypi-spy.co.uk/2018/04/i2c-oled-display-module-with-raspberry-pi/
+### https://www.raspberrypi-spy.co.uk/2014/11/enabling-the-i2c-interface-on-the-raspberry-pi/
+
+---
+
+- name: Enable i2c in /boot/config.txt
+  become: yes
+  lineinfile:
+    path: /boot/config.txt
+#    backup: yes ### Does not work on VFAT fs (name with timed extension probably too long)
+    regexp: '^#dtparam=i2c_arm=on'
+    line: dtparam=i2c_arm=on
+
+- name: Add i2c kernel module loading
+  become: yes
+  lineinfile:
+    path: /etc/modules
+    backup: yes
+    regexp: '^i2c-dev'
+    line: i2c-dev
+
+- name: Enable i2c_arm in dtparam
+  become: yes
+  command: dtparam i2c_arm=on
+
+- name: Load i2c-dev kernel module
+  become: yes
+  command: modprobe i2c-dev
+
+- name: Installing dependencies
+  become: yes
+  apt: name={{ item }}
+  with_items:
+      - python3-pip
+      - i2c-tools
+
+- name: Install Adafruit-SSD1306 python module
+  become: yes
+  pip: name={{ item }} state=latest
+  with_items:
+    - Adafruit-SSD1306
+
+- name: Deploy script
+  copy: mode="u+x" src="../files/oled_stats.py" dest="~/"
+
+- name: modify /etc/rc.local to start this on boot
+  become: yes
+  lineinfile:
+    path: /etc/rc.local
+    backup: yes
+    regexp: 'oled_stats.py'
+    insertbefore: '^exit 0'
+    line: 'python3 /home/pi/oled_stats.py &'
+
+# @TODO: reboot !
