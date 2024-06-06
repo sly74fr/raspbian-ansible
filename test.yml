@@ -23,10 +23,11 @@
 #    - { role: OS_reboot, waiting: no }
 #    - INSTALL_commons
 #    - INSTALL_seriallogger
-    - INSTALL_arduino
+#    - INSTALL_arduino
 #    - INSTALL_zabbix
 #    - INSTALL_AtmelAvrToolchain
-#    - { role: OS_hostname, hostname: "EPC-LAR-DRO-01" }
+#    - { role: OS_hostname, hostname: "{{ inventory_hostname_short }}" }
 #    - SAMBA_server
+#    - { role: SSH_firewall, ports: [3333, 3334, 4444]}
 #    - { role: NFS_client, server_address: "192.168.0.42", share: "/TubbyBaot/kturtle_logs", mnt_dir: "/TubbyBaot/kturtle_logs", mount_mode: rw }
 #    - INSTALL_oled_stats
