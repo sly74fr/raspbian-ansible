@@ -1,11 +1,7 @@
 ---
 
-# - name: Updating firmware
-#   shell: rpi-update
-#   become: yes
-
 - name: Cleaning apt-get
-  command: apt-get clean -y warn=False
+  command: apt-get clean -y
   become: yes
 
 - name: Updating apt-get
