@@ -1,0 +1,18 @@
+---
+
+- name: Install nfs-common on Debian
+  apt: name=nfs-common update_cache=yes cache_valid_time=3600 state=present
+  become: yes
+
+- name : Create mount point
+  file: path='{{ mnt_dir }}' state=directory
+  become: yes
+
+- name: Add NFS mount in fstab
+  mount:
+    name: '{{ mnt_dir }}'
+    src: '{{ server_address }}:{{ share }}'
+    fstype: nfs4
+    opts: auto,{{ mount_mode }},soft,rsize=8192,wsize=8192,user
+    state: mounted
+  become: yes

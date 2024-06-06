@@ -28,4 +28,5 @@
 #    - INSTALL_AtmelAvrToolchain
 #    - { role: OS_hostname, hostname: "EPC-LAR-DRO-01" }
 #    - SAMBA_server
+#    - { role: NFS_client, server_address: "192.168.0.42", share: "/TubbyBaot/kturtle_logs", mnt_dir: "/TubbyBaot/kturtle_logs", mount_mode: rw }
 #    - INSTALL_oled_stats
