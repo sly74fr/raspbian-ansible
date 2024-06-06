@@ -4,8 +4,12 @@
   apt: name="ufw"
   become: true
 
-- name: Open firewall port for SSH (TCP 22)
-  ufw: rule="allow" proto="tcp" port="22"
+### - name: Reset firewall rules to factory
+###   ufw: state=reset
+###   become: true
+
+- name: Open firewall port for OpenSSH (TCP 22)
+  ufw: rule="allow" name="OpenSSH"
   become: true
 
 #- debug: var=ports
