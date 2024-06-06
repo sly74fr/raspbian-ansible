@@ -5,8 +5,11 @@
 # Personnal prompt setup
 PS1="\[\033[7m\][\u@\h: \w - \t]\[\033[0m\] \$ "
 
-# Personnal history setup
+# Personnal HISTORY setup
 export HISTCONTROL=ignorespace:ignoredups:erasedups
+export HISTTIMEFORMAT="[%F %T] "
+export HISTIGNORE="ls:ll:pwd:bg:fg:history:top"
+export HISTFILESIZE=10000000
 export HISTSIZE=100000
 shopt -s histappend
 
