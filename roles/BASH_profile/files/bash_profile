@@ -50,6 +50,8 @@ alias hg='history | grep'
 alias ha='history -a'
 alias he='HISTORY_EDIT'
 alias hl='history -r'
+alias dt='date "+%Y.%m.%d.%H.%M.%S"'
+alias cmp='tar cvzf ../`dt`.tgz ./'
 #alias make='make -j'
 
 #######################
