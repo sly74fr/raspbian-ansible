@@ -29,7 +29,7 @@ For further customization, please have a look at the [official Raspberry Pi docu
 ## Applying setup.yml from a Mac with Ansible
 ```console
 pip install --upgrade pip
-pip install ansible==2.6.2
+pip install ansible==2.16.4
 git clone https://github.com/sly74fr/raspbian-ansible.git
 cd raspbian-ansible/
 ansible-playbook -i YOUR_INVENTORY setup.yml -kK -f 10 # At least once !

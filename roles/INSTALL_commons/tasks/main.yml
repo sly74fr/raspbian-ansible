@@ -1,8 +1,11 @@
 ---
 
 - name: Install common tools
-  apt: name={{ item }}
-  with_items:
+  become: yes
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
     - htop
     - tree
     - unzip
@@ -14,7 +17,7 @@
     - tio
     - git
     - telnet
-    - apt-file
     - gawk
-  state: present
-  become: yes
+    - apt-file
+    - pssh
+    - nmap

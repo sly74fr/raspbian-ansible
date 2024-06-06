@@ -1,12 +1,13 @@
 ---
 
 - name: Installing dependencies
-  apt: name={{ item }}
-  with_items:
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+  become: yes
+  apt:
+    name: "{{ item }}"
+  loop:
      - screen
      - meson
-  become: yes
-  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
 - set_fact: destination=~/Serial_Logger
 - name: Creating directory
