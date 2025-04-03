@@ -1,5 +1,7 @@
 ---
 
+- debug: msg="{{ ntp_config_server }}"
+
 - name: Update '/etc/systemd/timesyncd.conf' with given NTP server(s) if any
   become: yes
   replace:
