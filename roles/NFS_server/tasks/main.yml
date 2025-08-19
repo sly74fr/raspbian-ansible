@@ -1,0 +1,49 @@
+---
+
+- name: Install NFS server
+  apt: name=nfs-kernel-server update_cache=yes cache_valid_time=3600 state=present
+  become: yes
+
+- name : Create shared directories
+  file:
+    path: '{{ lv_mnt }}/{{ item }}'
+    state: directory
+    owner: nobody
+    group: nogroup
+    mode: 0777
+  with_items: '{{ shared_dirs }}'
+  become: yes
+
+- name : Create 'well mounted flag' file in each shared directories
+  file:
+    path: '{{ lv_mnt }}/{{ item }}/NFS_MOUNT_OK'
+    state: touch
+    owner: nobody
+    group: nogroup
+    mode: 0444
+  with_items: '{{ shared_dirs }}'
+  become: yes
+
+- name: Create exports
+  lineinfile:
+    dest: /etc/exports
+    state: present
+    regexp: '^{{ lv_mnt }}/{{ item }}'
+    line: '{{ lv_mnt }}/{{ item }} *(rw,sync,no_subtree_check,root_squash)'
+    backup: yes
+  with_items: '{{ shared_dirs }}'
+  become: yes
+
+- name: Restart NFS immediately
+  service: "name=nfs-kernel-server state=restarted"
+  become: yes
+- name: Ensure NFS is running
+  service: "name=nfs-kernel-server state=started enabled=yes"
+  become: yes
+
+- name: Open firewall port for NFS
+  ufw: rule="allow" name="NFS"
+  become: true
+- name: Reload firewall rules
+  ufw: state="reloaded"
+  become: yes
