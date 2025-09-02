@@ -197,10 +197,10 @@ alias gph='GIT_PUSH'
 alias gpl='git pull -v --dry-run && HALT_TO_CONFIRM "Pull" && git pull'
 alias gsh='git stash -h'
 alias gsl='git stash list'
-alias gss='git stash show'
+alias gsv='git stash show -v'
 alias gsa='git stash push'
-alias gsd='gsl && HALT_TO_CONFIRM "Drop" && git stash drop'
-alias gsp='gsl && HALT_TO_CONFIRM "Pop" && git stash pop'
+alias gsg='gsl && HALT_TO_CONFIRM "Pop" && git stash pop'
+alias gsr='gsl && HALT_TO_CONFIRM "Drop" && git stash drop'
 alias gus='HALT_TO_CONFIRM "Unstage" && git restore --staged'
 alias gwc='GIT_SRC_LINES_OF_CODE'
 alias gso='GIT_SHOW_COMMIT'
@@ -208,7 +208,7 @@ alias guc='GIT_UNDO_COMMIT'
 GIT_HELP()
 {
     if [ $# -eq 0 ]; then
-        alias | grep "alias g[a-z][a-z]='" | sed "s/alias //g" | sed "s/=/ = /g" | tr -d "'" | sort
+        alias | grep "alias g[a-z][a-z]='" | sed "s/alias //g" | sed "s/=/ = /g" | tr -d "'"
     else
         git help $1
     fi
