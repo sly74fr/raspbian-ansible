@@ -16,6 +16,7 @@ shopt -s histappend
 #####################
 # Personnal aliases #
 #####################
+alias l='LL_OR_CAT'
 alias ll='ls -lh'
 alias lll='ls -laih'
 alias mkcd='MAKE_DIR_AND_MOVE_IN'
@@ -26,8 +27,8 @@ alias g='grep -ain'
 alias gr='g -r'
 alias s='SEARCH'
 alias swap='SWAP_2_FILES'
-alias c='CD_AND_LL'
-alias c-='c -'
+alias c='CD_AND_LL_OR_CAT'
+alias c-='cd - && ll'
 alias ..='c ..'
 alias ,,='c ..'
 alias ...='c ../..'
@@ -73,14 +74,26 @@ HALT_TO_CONFIRM()
     printf "%${LEN}s\n" '' | tr '[:blank:]' '~'
 }
 
-CD_AND_LL() { cd "$@" && ll; }
-l()
+LL_OR_CAT()
 {
     if [ $# -eq 0 ]; then
         ll
     else
         if [ -d "$1" ]; then
             ll $1
+        else
+            cat -v $1
+        fi
+    fi
+}
+CD_AND_LL() { cd "$@" && ll; }
+CD_AND_LL_OR_CAT()
+{
+    if [ $# -eq 0 ]; then
+        ll
+    else
+        if [ -d "$1" ]; then
+            CD_AND_LL $1 #ll $1
         else
             cat -v $1
         fi
