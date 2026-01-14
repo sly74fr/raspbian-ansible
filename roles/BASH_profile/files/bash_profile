@@ -95,16 +95,16 @@ CD_AND_LL_OR_CAT()
         ll
     else
         if [ -d "$1" ]; then
-            CD_AND_LL $1 #ll $1
+            CD_AND_LL "${1}" #ll $1
         else
-            cat -v $1
+            cat -v "${1}"
         fi
     fi
 }
-MAKE_DIR_AND_MOVE_IN() { mkdir -p "$1" && cd "$1"; }
+MAKE_DIR_AND_MOVE_IN() { mkdir -p "${1}" && cd "${1}"; }
 RECURSIVE_REMOVE()
 {
-    if [ ! -e "$1" ]; then
+    if [ ! -e "${1}" ]; then
         echo "File not found"
         return 1
     fi
