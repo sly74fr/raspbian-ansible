@@ -39,6 +39,7 @@ alias .......='c ../../../../../..'
 alias treee='pwd;find . -path ./node_modules -prune -o -print | sort | sed '\''1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/| /g'\'''
 alias du='du -sh'
 alias df='df -h'
+alias dsrm='DS-DESTROY'
 alias quit='kill -15'
 alias psx='ps -x'
 alias psg='ps -x | grep'
@@ -249,6 +250,13 @@ GIT_PUSH()
     git push $1
 }
 
+# https://codeberg.org/EvanHahn/dotfiles/src/commit/f7a9d94ae2254cb7e5f67e6e5bdb74b6467f6dec/home/bin/bin/ds-destroy
+DS-DESTROY()
+{
+    find . -name .DS_Store -delete
+}
+
 #############################
 # Machine specific settings #
 #############################
+
