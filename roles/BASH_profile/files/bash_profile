@@ -54,6 +54,7 @@ alias he='HISTORY_EDIT'
 alias hl='history -r'
 alias dt='date "+%Y.%m.%d.%H.%M.%S"'
 alias cmp='tar cvzf ../`basename $PWD`_`dt`.tgz ./'
+alias waitfor='WAITFOR'
 #alias make='make -j'
 
 #######################
@@ -255,6 +256,14 @@ DS-DESTROY()
 {
     find . -name .DS_Store -delete
 }
+
+# https://codeberg.org/EvanHahn/dotfiles/src/commit/f7a9d94ae2254cb7e5f67e6e5bdb74b6467f6dec/home/bin/bin/waitfor
+WAITFOR()
+{
+    pid="$1"
+    tail --pid="$pid" -f /dev/null
+}
+
 
 #############################
 # Machine specific settings #
