@@ -8,6 +8,8 @@
   loop:
      - screen
      - meson
+     - gcc
+     - g++
 
 - set_fact: destination=~/Serial_Logger
 - name: Creating directory
