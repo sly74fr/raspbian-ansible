@@ -50,3 +50,7 @@
         chdir: "{{ destination }}"
   ignore_errors: no
   when: git_clone.changed
+
+- name: Grant access to physical serial ports
+  become: yes
+  command: usermod -a -G dialout {{ ansible_ssh_user }}
