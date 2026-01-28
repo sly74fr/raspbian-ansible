@@ -21,15 +21,15 @@
 
 # Install latest tio
 - set_fact: destination={{ destination }}/TIO/
-### - name: Recursively removing directory
-###   file: path={{ destination }} state=absent
+- name: Recursively removing directory
+  file: path={{ destination }} state=absent
 - name: Creating directory
   file: path={{ destination }} state=directory
 - name: Clone tio GitHub repository
   git:
-    repo: https://github.com/sly74fr/tio.git
+    repo: https://github.com/tio/tio.git
     dest: "{{ destination }}"
-#    version: feature/macos_meson_build
+    version: v2.7 # the last version without lua dependencies
     update: yes
     force: yes
   register: git_clone
