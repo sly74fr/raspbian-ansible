@@ -1,0 +1,11 @@
+[workspace]
+authors = ["Sylvain LAFRASSE <sylvain.lafrasse@lapp.in2p3.fr>"]
+channels = ["conda-forge"]
+name = "raspbian-ansible"
+platforms = ["osx-arm64"]
+version = "1.0.0"
+
+[tasks]
+
+[dependencies]
+ansible = ">=12.0.0,<13"
