@@ -48,6 +48,7 @@ alias psag='ps -aef | grep'
 alias ht='htop -t -d 0.5'
 alias tf='tail -f'
 alias h='HISTORY_SEARCH'
+alias hu='HISTORY_SEARCH_UNIQ'
 alias hg='history | grep'
 alias ha='history -a'
 alias he='HISTORY_EDIT'
@@ -81,14 +82,14 @@ LL_OR_CAT()
     if [ $# -eq 0 ]; then
         ll
     else
-        if [ -d "$1" ]; then
-            ll $1
+        if [ -d "${1}" ]; then
+            ll "${1}"
         else
-            cat -v $1
+            cat -v "${1}"
         fi
     fi
 }
-CD_AND_LL() { cd "$@" && ll; }
+CD_AND_LL() { cd "${@}" && ll; }
 CD_AND_LL_OR_CAT()
 {
     if [ $# -eq 0 ]; then
@@ -127,6 +128,18 @@ HISTORY_SEARCH()
         history | awk '{$1=""; print substr($0, 2, length($0))}'
     else
         h $ARGS_REST | grep $LAST_ARG
+    fi
+}
+HISTORY_SEARCH_UNIQ()
+{
+    eval LAST_ARG=\${$#}
+    eval ARGS_REST=\${*%${!#}}
+
+    if [ $# -le 0 ]; then
+        #       # Remove history id                              # Sort on CLI value     # uniq CLI  # Re-sort on date
+        history | awk '{$1=""; print substr($0, 2, length($0))}' | LC_ALL=C sort -k 3 -u | uniq -f 3 | LC_ALL=C sort
+    else
+        hu $ARGS_REST | grep $LAST_ARG
     fi
 }
 
@@ -197,7 +210,7 @@ alias gru='gbr && HALT_TO_CONFIRM "Prune" && git remote update origin --prune'
 alias gpu='git push --set-upstream origin'
 alias gph='GIT_PUSH'
 alias gpl='git pull -v --dry-run && HALT_TO_CONFIRM "Pull" && git pull'
-alias grb='git rebase $1 --autostash'
+alias grb='git rebase ${1} --autostash'
 alias gsh='git stash -h'
 alias gsl='git stash list'
 alias gsv='git stash show -v'
