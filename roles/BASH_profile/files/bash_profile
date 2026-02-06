@@ -132,15 +132,7 @@ HISTORY_SEARCH()
 }
 HISTORY_SEARCH_UNIQ()
 {
-    eval LAST_ARG=\${$#}
-    eval ARGS_REST=\${*%${!#}}
-
-    if [ $# -le 0 ]; then
-        #       # Remove history id                              # Sort on CLI value     # uniq CLI  # Re-sort on date
-        history | awk '{$1=""; print substr($0, 2, length($0))}' | LC_ALL=C sort -k 3 -u | uniq -f 3 | LC_ALL=C sort
-    else
-        hu $ARGS_REST | grep $LAST_ARG
-    fi
+    h $@ | LC_ALL=C sort -k 3 -u | uniq -f 3 | LC_ALL=C sort
 }
 
 SWAP_2_FILES()
@@ -280,7 +272,6 @@ WAITFOR()
     pid="$1"
     tail --pid="$pid" -f /dev/null
 }
-
 
 #############################
 # Machine specific settings #
